@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-public class PLayerInfoScript : MonoBehaviour
+public class PlayerInfoScript : MonoBehaviour
 {
     [Header("Player Stats")]
     public float health = 100f;

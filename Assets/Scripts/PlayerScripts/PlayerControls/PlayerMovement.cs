@@ -63,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
     async Task TrailChecker()
     {
 
-        if (playerSpeed >= 200f)
+        if (playerSpeed >= 150f)
         {
             fast.SetActive(false);
             faster.SetActive(false);
@@ -71,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
             meteoric.SetActive(false);
             devine.SetActive(true);
         }
-        else if (playerSpeed >= 150f)
+        else if (playerSpeed >= 120f)
         {
             fast.SetActive(false);
             faster.SetActive(false);

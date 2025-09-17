@@ -25,13 +25,13 @@ public class BiteScript : MonoBehaviour
     public float biteTickRate = 0.05f;
     public float bitePause = 0.75f;
     public float bitePauseFactor= 0;
-    PLayerInfoScript playerinfo;
+    PlayerInfoScript playerinfo;
     // Update is called once per frame
     Rigidbody2D rb;  
     private void Start()
     {
         rb=GetComponent<Rigidbody2D>();
-        playerinfo =GetComponent<PLayerInfoScript>();
+        playerinfo =GetComponent<PlayerInfoScript>();
         BiteColor = inActiveBiteColor;
     }
 
@@ -65,7 +65,7 @@ public class BiteScript : MonoBehaviour
         {
 
             PerformBite();
-            rb.linearVelocity = rb.linearVelocity +(rb.linearVelocity*.1f) ; // add .1 of speed to the player after biting an enemy
+          
             yield return new WaitForSeconds(biteTickRate);
             elapsedTime += biteTickRate;
         }
@@ -99,8 +99,9 @@ public class BiteScript : MonoBehaviour
             {
                 StartCoroutine(BitePauseTime());
                 enemyHP.TakeDamage(biteDamage);
+                rb.linearVelocity = rb.linearVelocity + (rb.linearVelocity * .3f); // add .3 of speed to the player after biting an enemy
 
-                ;            }
+            }
             else
             {
                 Debug.Log("error no enemy");

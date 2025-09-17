@@ -16,6 +16,7 @@ public class EnemyBullet : MonoBehaviour
         Destroy(this.gameObject, 2); //destroy in 2 sec
     }
 
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Wall" )|| collision.gameObject.CompareTag( "Player"))

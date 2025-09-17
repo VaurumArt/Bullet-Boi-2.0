@@ -75,7 +75,7 @@ public class ShootAndTP : MonoBehaviour
                 // Get the Speeds (magnitude) 
                 float playerSpeed = playerPreviousSpeed.magnitude;
                 float bulletSpeed = bulletVelocity.magnitude;
-                float combinedSpeed = (bulletSpeed * momentumMulti) + playerSpeed; 
+                float combinedSpeed = (bulletSpeed * momentumMulti) + (playerSpeed *.3f); 
                 // apply combined speed in bullet's direction 
                 Vector2 bulletDirection = bulletVelocity.normalized;
                 rb.linearVelocity = bulletDirection * combinedSpeed;

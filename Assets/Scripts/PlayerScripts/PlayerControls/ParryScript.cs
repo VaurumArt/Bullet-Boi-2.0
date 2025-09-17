@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Analytics;
 
 public class ParryScript : MonoBehaviour
 {
@@ -21,6 +22,9 @@ public class ParryScript : MonoBehaviour
 
     public float parryDuration = 0.2f;
     public float parryCooldown = 0.5f;
+    public float parryTickRate = 0.05f;
+
+    public Transform firePoint;
 
     void Start()
     {
@@ -32,26 +36,56 @@ public class ParryScript : MonoBehaviour
         {
             Debug.Log("Parrying!");
             StartCoroutine(ParryingActivated());
-            Collider2D [] parriedProjectile  = Physics2D.OverlapCircleAll(parryCenter.position, range,projectileLayers);//Hurt box to parry projectiles 
-
-            foreach (Collider2D projectile in parriedProjectile )// Check each projectile that was parried 
-            {
-                Debug.Log("Parried " + projectile.name);
-            }
         }
         else if (!canParry)
         {
             Debug.Log("Parry is on cooldown");
         }
     }
+    void PerformParry()
+    {
+    
+        Collider2D[] parriedProjectile = Physics2D.OverlapCircleAll(parryCenter.position, range, projectileLayers);//Hurt box to parry projectiles 
+
+        foreach (Collider2D projectile in parriedProjectile)// Check each projectile that was parried 
+        {
+       
+            Debug.Log("Parried " + projectile.name);
+            EnemyBullet enemyBullet = projectile.GetComponent<EnemyBullet>();
+            if(enemyBullet != null)
+            {
+                gameObject.layer = LayerMask.NameToLayer("PlayerProjectile");
+
+                Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
+                Vector2 newDirectrion;
+                Vector3 pointPost = firePoint.position;
+                newDirectrion = (pointPost - projectile.transform.position).normalized;
+                rb.linearVelocity = newDirectrion * 100;
+           
+            
+            }
+           
+                
+        }
+
+    }
     IEnumerator ParryingActivated()
     {
         isParrying = true;
         ParryColor = activeParryColor;
-        yield return new WaitForSeconds(parryDuration);
+        float ElapsedTime = 0;
+        while (ElapsedTime < parryDuration)
+        {
+            PerformParry();
+
+            yield return new WaitForSeconds(parryTickRate);
+            ElapsedTime += parryTickRate;
+        }
+
         isParrying = false;
         ParryColor = Color.blue;
         StartCoroutine(ParryingisCoolingdown());
+       
     }
     IEnumerator ParryingisCoolingdown()
     {
