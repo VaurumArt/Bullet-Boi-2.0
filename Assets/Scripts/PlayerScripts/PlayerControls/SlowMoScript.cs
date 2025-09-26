@@ -23,7 +23,7 @@ public class SlowMoScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     { 
-        focusBar = Mathf.Clamp(focusBar,0,100);
+        focusBar = Mathf.Clamp(focusBar,0, maxFocus);
         if (isSlowMo && focusBar > 0)
         {
             focusBar -= 30 * Time.unscaledDeltaTime;// fix this 

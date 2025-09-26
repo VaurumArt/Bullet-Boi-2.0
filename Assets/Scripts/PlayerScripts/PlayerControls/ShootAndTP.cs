@@ -20,9 +20,11 @@ public class ShootAndTP : MonoBehaviour
     public bool isTeleporting = false; // Flag to disable movement control
     public float teleportMomentumDuration = 1f; // How long momentum lasts
 
+    PlayerHP playerHP;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        playerHP = GetComponent<PlayerHP>();
         rb = GetComponent<Rigidbody2D>(); // Fixed: assign to class field, not local variable
     }
 
@@ -46,6 +48,7 @@ public class ShootAndTP : MonoBehaviour
         if (context.started)
         {
             Debug.Log("Fire!");
+            playerHP.bulletHealthDrain();
             GameObject bulletClone = Instantiate(bulletPrefab);
             bulletClone.transform.position = firePoint.position;
             bulletClone.transform.rotation = Quaternion.Euler(0, 0, lookAngle);

@@ -54,14 +54,13 @@ public class ParryScript : MonoBehaviour
             EnemyBullet enemyBullet = projectile.GetComponent<EnemyBullet>();
             if(enemyBullet != null)
             {
-                gameObject.layer = LayerMask.NameToLayer("PlayerProjectile");
-
-                Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
+                Rigidbody2D rbBullet = projectile.GetComponent<Rigidbody2D>();
                 Vector2 newDirectrion;
                 Vector3 pointPost = firePoint.position;
                 newDirectrion = (pointPost - projectile.transform.position).normalized;
-                rb.linearVelocity = newDirectrion * 100;
-           
+                rbBullet.linearVelocity = newDirectrion * 100;
+                rbBullet.gameObject.layer = LayerMask.NameToLayer("PlayerProjectile");
+                rbBullet.gameObject.tag = "Bullet";
             
             }
            

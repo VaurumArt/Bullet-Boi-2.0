@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     public float requiredSpeed = 10f;
     public bool isBraked;
+    public float jumpForce = 5f;
 
 
     [Header("Ground Checker")]
@@ -40,8 +41,8 @@ public class PlayerMovement : MonoBehaviour
 
         BrakeCheck();
         GroundCheck();
-
-        if (isGrounded && isBraked) //Check if Player isGrounded and current speed is lower that required speed the player can move 
+        //&& isBraked
+        if (isGrounded ) //Check if Player isGrounded and current speed is lower that required speed the player can move 
         {
             rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
         }
@@ -49,6 +50,11 @@ public class PlayerMovement : MonoBehaviour
 
         playerSpeed = rb.linearVelocity.magnitude;
         TrailChecker();
+    }
+
+    public void BiteSpeedup()
+    {
+        rb.linearVelocity = rb.linearVelocity + (rb.linearVelocity * .3f); // add .3 of speed to the player after biting an enemy
     }
 
     void trailDisabler()
@@ -60,6 +66,36 @@ public class PlayerMovement : MonoBehaviour
         devine.SetActive(false);
 
     }
+   
+    void BrakeCheck()
+    {
+        // add an animation that the character is trying to counter act the speed 
+        float currentSpeed = rb.linearVelocity.magnitude;
+        isBraked = currentSpeed <= requiredSpeed;
+    }
+
+    void GroundCheck()
+    {
+
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayers);
+    }
+    #region PLAYER_MOVEMENT
+    public void OnMove(InputAction.CallbackContext context)
+    {
+        moveInput = context.ReadValue<Vector2>();
+
+    }
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        if (isGrounded)
+        {
+            Debug.Log("Jump");
+            rb.AddForce(Vector2.up * jumpForce);    
+        }
+
+    }
+
+    #endregion
     async Task TrailChecker()
     {
 
@@ -99,26 +135,6 @@ public class PlayerMovement : MonoBehaviour
             trailDisabler();
         }
     }
-    void BrakeCheck()
-    {
-        // add an animation that the character is trying to counter act the speed 
-        float currentSpeed = rb.linearVelocity.magnitude;
-        isBraked = currentSpeed <= requiredSpeed;
-    }
-
-    void GroundCheck()
-    {
-
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayers);
-    }
-    #region PLAYER_MOVEMENT
-    public void OnMove(InputAction.CallbackContext context)
-    {
-        moveInput = context.ReadValue<Vector2>();
-
-    }
-    #endregion
-
 
 
 }

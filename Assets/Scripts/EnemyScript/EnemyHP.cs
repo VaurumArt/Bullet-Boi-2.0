@@ -6,9 +6,11 @@ public class EnemyHP : MonoBehaviour
     public float maxHealth = 10f;
     public float currentHealth;
     public float lethalSpeed = 30f;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+     
         currentHealth = maxHealth;
 
     }
@@ -34,11 +36,12 @@ public class EnemyHP : MonoBehaviour
         if(collision.gameObject.CompareTag("Player"))
         {
        Rigidbody2D playerRb =collision.gameObject.GetComponent<Rigidbody2D>();
-        
+          
             float playerSpeed = playerRb.linearVelocity.magnitude;
 
             if (playerSpeed >= lethalSpeed) //Check if the player speed is fast enough to kill the enemy 
             {
+             
                 Die();
             }
 

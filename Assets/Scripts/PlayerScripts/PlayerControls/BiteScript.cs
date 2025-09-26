@@ -25,13 +25,15 @@ public class BiteScript : MonoBehaviour
     public float biteTickRate = 0.05f;
     public float bitePause = 0.75f;
     public float bitePauseFactor= 0;
-    PlayerInfoScript playerinfo;
+    PlayerHP playerHP;
+    PlayerMovement playerMovement;
     // Update is called once per frame
-    Rigidbody2D rb;  
+
     private void Start()
     {
-        rb=GetComponent<Rigidbody2D>();
-        playerinfo =GetComponent<PlayerInfoScript>();
+     
+        playerMovement =GetComponent<PlayerMovement>();
+        playerHP = GetComponent<PlayerHP>();
         BiteColor = inActiveBiteColor;
     }
 
@@ -99,7 +101,9 @@ public class BiteScript : MonoBehaviour
             {
                 StartCoroutine(BitePauseTime());
                 enemyHP.TakeDamage(biteDamage);
-                rb.linearVelocity = rb.linearVelocity + (rb.linearVelocity * .3f); // add .3 of speed to the player after biting an enemy
+                playerMovement.BiteSpeedup();
+                playerHP.BiteHeal();
+          
 
             }
             else
