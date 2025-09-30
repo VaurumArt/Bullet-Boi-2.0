@@ -72,7 +72,7 @@ public class ParryScript : MonoBehaviour
 
               
 
-                rbBullet.linearVelocity = newDirection * parrySpeedBoost;
+                rbBullet.linearVelocity = newDirection *( rbBullet.linearVelocity.magnitude* parrySpeedBoost);
 
                 rbBullet.gameObject.layer = LayerMask.NameToLayer("PlayerProjectile");
 

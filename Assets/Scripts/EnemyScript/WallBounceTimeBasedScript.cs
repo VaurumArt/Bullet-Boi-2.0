@@ -30,6 +30,8 @@ public class WallBounceTimeBasedScript : MonoBehaviour
     public float goodBounce = 1.0f;
     public float lateBounce = 0.5f;
     public float jumpForce = 750;
+    public float bouncePause =0.5f;
+    public float bouncePauseFactor = 0f;
 
     PlayerMovement playerMovement;
     Rigidbody2D rb;
@@ -43,7 +45,7 @@ public class WallBounceTimeBasedScript : MonoBehaviour
 
     public void OnJump()
     {
-        if (!isBouncing && canBounce && playerMovement.playerSpeed >= 24)
+        if (!isBouncing && canBounce && playerMovement.playerSpeed >= 30)
         {
             Debug.Log("Bouncing!");
             StartCoroutine(BounceActivated());
@@ -59,9 +61,9 @@ public class WallBounceTimeBasedScript : MonoBehaviour
         }
     }
 
-    bool PerformBounce(float reactionTime)
+    bool PerformBounce(float reactionTime,float currentSpeed)
     {
-        float currentSpeed = playerMovement.playerSpeed;
+        
         Collider2D wallcheck = Physics2D.OverlapCircle(PlayerCenter.position, range, WallLayers);
 
         if (!wallcheck)
@@ -71,36 +73,46 @@ public class WallBounceTimeBasedScript : MonoBehaviour
         }
 
         float multiplier;
-        if (reactionTime < perfectReaction)
+        if (reactionTime <= perfectReaction)
         {
+            StartCoroutine(BouncePauseTime());
             Debug.Log("PERFECT");
             multiplier = perfectBounce;
         }
-        else if (reactionTime < goodReaction)
+        else if (reactionTime <= goodReaction)
         {
+          //  StartCoroutine(BouncePauseTime());
             Debug.Log("Good");
             multiplier = goodBounce;
         }
         else
         {
-            Debug.Log("Late");
             multiplier = lateBounce;
         }
+            
 
         float newSpeed = currentSpeed * multiplier;
         rb.linearVelocity = playerMovement.lookDirection * newSpeed;
         return true;   
     }
-
+    IEnumerator BouncePauseTime()
+    {
+        Time.timeScale = bouncePauseFactor;
+        Time.fixedDeltaTime = Time.timeScale * .02f;
+        yield return new WaitForSecondsRealtime(bouncePause);
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = 0.02f;
+    }
     IEnumerator BounceActivated()
     {
+        float currentSpeed = playerMovement.playerSpeed;
         isBouncing = true;
         bounceColor = activeBounceColor;
         float elapsedTime = 0;
 
         while (elapsedTime < bounceReadyDuration)
         {
-         bool bounceSuccessful =  PerformBounce(elapsedTime);
+         bool bounceSuccessful =  PerformBounce(elapsedTime,currentSpeed);
             if (bounceSuccessful)
             {
                 break;
