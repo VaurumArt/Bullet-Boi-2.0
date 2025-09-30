@@ -48,7 +48,7 @@ public class ShootAndTP : MonoBehaviour
 
         if (context.started)
         {
-            Debug.Log("Fire!");
+            //Debug.Log("Fire!");
             playerHP.bulletHealthDrain();
             GameObject bulletClone = Instantiate(bulletPrefab, firePoint.position, Quaternion.Euler(0, 0, lookAngle));
             Rigidbody2D rbBullet = bulletClone.GetComponent<Rigidbody2D>();
@@ -96,8 +96,8 @@ public class ShootAndTP : MonoBehaviour
                 }
                   
                 // DEBUG: Check what the bullet's velocity actually is
-                Debug.Log($"Bullet velocity when teleporting: {bulletVelocity}");
-                Debug.Log($"Bullet X: {bulletVelocity.x}, Bullet Y: {bulletVelocity.y}");
+                 //  Debug.Log($"Bullet velocity when teleporting: {bulletVelocity}");
+               // Debug.Log($"Bullet X: {bulletVelocity.x}, Bullet Y: {bulletVelocity.y}");
 
                 // Teleport to bullet position
                 transform.position = lastBullet.transform.position;
@@ -105,9 +105,9 @@ public class ShootAndTP : MonoBehaviour
                 isTeleporting = true;
                 StartCoroutine(EndTeleportMomentum());
 
-                // DEBUG: Check what velocity we're setting on player
-                Debug.Log($"Player velocity after teleport: {rb.linearVelocity}");
-                Debug.Log($"Player X: {rb.linearVelocity.x}, Player Y: {rb.linearVelocity.y}");
+                   // DEBUG: Check what velocity we're setting on player
+                 //  Debug.Log($"Player velocity after teleport: {rb.linearVelocity}");
+                 //  Debug.Log($"Player X: {rb.linearVelocity.x}, Player Y: {rb.linearVelocity.y}");
 
                 // NOW destroy the bullet and clear reference (AFTER getting velocity!)
                 Destroy(lastBullet);
@@ -115,7 +115,7 @@ public class ShootAndTP : MonoBehaviour
             }
             else
             {
-                Debug.Log("No bullet available");
+               // Debug.Log("No bullet available");
             }
         }
 
@@ -128,7 +128,7 @@ IEnumerator CheckVelocityOverTime()
         for (int i = 0; i < 10; i++)
         {
             yield return new WaitForFixedUpdate();
-            Debug.Log($"Frame {i}: Player velocity = {rb.linearVelocity}");
+           // Debug.Log($"Frame {i}: Player velocity = {rb.linearVelocity}");
         }
     }
 
@@ -137,6 +137,6 @@ IEnumerator EndTeleportMomentum()
     {
         yield return new WaitForSeconds(teleportMomentumDuration);
         isTeleporting = false;
-        Debug.Log("Teleport momentum ended - movement control restored");
+        //Debug.Log("Teleport momentum ended - movement control restored");
     }
 }

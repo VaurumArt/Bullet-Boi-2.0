@@ -89,13 +89,13 @@ public class BiteScript : MonoBehaviour
     }
     void PerformBite()
     {
-        Debug.Log("Bite tick!");
+      //  Debug.Log("Bite tick!");
         Vector3 offsetPosition = attackPoint.position + attackPoint.right * (biteSize.x * 0.5f);
         Collider2D[] bitEnemies = Physics2D.OverlapBoxAll(offsetPosition, biteSize, attackPoint.eulerAngles.z, EnemyLayers);
 
         foreach (Collider2D enemy in bitEnemies)
         {
-            Debug.Log("We hit " + enemy.name);
+          //  Debug.Log("We hit " + enemy.name);
             EnemyHP enemyHP = enemy.GetComponent<EnemyHP>();
             if (enemyHP != null)
             {
@@ -108,7 +108,7 @@ public class BiteScript : MonoBehaviour
             }
             else
             {
-                Debug.Log("error no enemy");
+              //  Debug.Log("error no enemy");
             }
 
         }
@@ -122,7 +122,7 @@ public class BiteScript : MonoBehaviour
         yield return new WaitForSeconds(biteCooldown);
         BiteColor = inActiveBiteColor;
         canBite = true;
-        Debug.Log("Bite is Available");
+     //   Debug.Log("Bite is Available");
     }
     private void OnDrawGizmos()
     {

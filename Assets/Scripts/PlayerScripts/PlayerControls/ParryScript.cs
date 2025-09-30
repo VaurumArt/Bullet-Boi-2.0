@@ -40,12 +40,12 @@ public class ParryScript : MonoBehaviour
     {
         if (!isParrying && canParry)
         {
-            Debug.Log("Parrying!");
+       //     Debug.Log("Parrying!");
             StartCoroutine(ParryingActivated());
         }
         else if (!canParry)
         {
-            Debug.Log("Parry is on cooldown");
+            //Debug.Log("Parry is on cooldown");
         }
     }
     void PerformParry()
@@ -56,7 +56,9 @@ public class ParryScript : MonoBehaviour
         foreach (Collider2D projectile in parriedProjectile)// Check each projectile that was parried 
         {
        
-            Debug.Log("Parried " + projectile.name);
+         //   Debug.Log("Parried " + projectile.name);
+         //   Debug.Log("Parried " + projectile.name);
+         //   Debug.Log("Parried " + projectile.name);
             EnemyBullet enemyBullet = projectile.GetComponent<EnemyBullet>();
             if(enemyBullet != null)
             {
@@ -109,7 +111,7 @@ public class ParryScript : MonoBehaviour
         yield return new WaitForSeconds(parryCooldown);
         canParry = true;
         ParryColor = inActiveParryColor;
-        Debug.Log("Parry is Available");
+       // Debug.Log("Parry is Available");
     }
     private void OnDrawGizmos()
     {
