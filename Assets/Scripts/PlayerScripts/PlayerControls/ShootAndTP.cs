@@ -7,6 +7,7 @@ public class ShootAndTP : MonoBehaviour
     [Header("Bullet Info")]
     public Transform firePoint;
     public GameObject bulletPrefab;
+    public float bulletSpeed =40f;
     // public float bulletSpeed = 50;
     public float momentumMulti = 0.5f; //Bullet momemtun to Player's Momentum Scaler
 
@@ -49,9 +50,9 @@ public class ShootAndTP : MonoBehaviour
         {
             Debug.Log("Fire!");
             playerHP.bulletHealthDrain();
-            GameObject bulletClone = Instantiate(bulletPrefab);
-            bulletClone.transform.position = firePoint.position;
-            bulletClone.transform.rotation = Quaternion.Euler(0, 0, lookAngle);
+            GameObject bulletClone = Instantiate(bulletPrefab, firePoint.position, Quaternion.Euler(0, 0, lookAngle));
+            Rigidbody2D rbBullet = bulletClone.GetComponent<Rigidbody2D>();
+            rbBullet.linearVelocity= lookDirection * bulletSpeed;
 
             lastBullet = bulletClone;
         }
@@ -73,25 +74,33 @@ public class ShootAndTP : MonoBehaviour
 
                 // Get bullet's velocity BEFORE destroying it
                 Vector2 bulletVelocity = bulletRb.linearVelocity;
-
+                float combinedSpeed;
 
                 // Get the Speeds (magnitude) 
                 float playerSpeed = playerPreviousSpeed.magnitude;
                 float bulletSpeed = bulletVelocity.magnitude;
-                float combinedSpeed = (bulletSpeed * momentumMulti) + (playerSpeed *.3f); 
-                // apply combined speed in bullet's direction 
-                Vector2 bulletDirection = bulletVelocity.normalized;
-                rb.linearVelocity = bulletDirection * combinedSpeed;
+
+                if (bulletSpeed > playerSpeed)
+                {
+                    combinedSpeed = (bulletSpeed * momentumMulti);
+                    // apply combined speed in bullet's direction 
+                    Vector2 bulletDirection = bulletVelocity.normalized;
+                    rb.linearVelocity = bulletDirection * combinedSpeed;
+                }
+                else if (bulletSpeed < playerSpeed)
+                {
+                    combinedSpeed = (playerSpeed);
+                    // if player is faster than bullet the momentum will be kept 
+                    Vector2 bulletDirection = bulletVelocity.normalized;
+                    rb.linearVelocity = bulletDirection * combinedSpeed;
+                }
+                  
                 // DEBUG: Check what the bullet's velocity actually is
                 Debug.Log($"Bullet velocity when teleporting: {bulletVelocity}");
                 Debug.Log($"Bullet X: {bulletVelocity.x}, Bullet Y: {bulletVelocity.y}");
 
                 // Teleport to bullet position
                 transform.position = lastBullet.transform.position;
-
-                // Inherit bullet's momentum (scaled by momentumMulti)
-               // rb.linearVelocity = bulletVelocity * momentumMulti;
-
                 // Set teleport flag and start momentum timer
                 isTeleporting = true;
                 StartCoroutine(EndTeleportMomentum());

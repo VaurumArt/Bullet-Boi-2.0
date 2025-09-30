@@ -6,9 +6,10 @@ public class GunRotation : MonoBehaviour
     [Header("Gun Settings")]
     public bool smoothRotation = false;
     public float rotationSpeed = 10f;
+    public float rotationOffset = 0f; // Adjust if sprite doesn't face right by default
 
-    private bool facingRight = true;
     private Camera mainCamera;
+    private Vector3 cachedMouseWorldPosition;
 
     void Start()
     {
@@ -25,24 +26,14 @@ public class GunRotation : MonoBehaviour
         // Check if mouse is available
         if (Mouse.current == null) return;
 
-        // Get the mouse position in screen space using new Input System
-        Vector2 mouseScreenPosition = Mouse.current.position.ReadValue();
-
-        // Convert the screen position to world position
-        Vector3 mouseWorldPosition = mainCamera.ScreenToWorldPoint(new Vector3(
-            mouseScreenPosition.x,
-            mouseScreenPosition.y,
-            mainCamera.nearClipPlane
-        ));
-
-        // For 2D games, set Z to match gun's Z position
-        mouseWorldPosition.z = transform.position.z;
+        // Calculate and cache mouse world position
+        cachedMouseWorldPosition = CalculateMouseWorldPosition();
 
         // Calculate the direction from the gun to the mouse position
-        Vector2 direction = (mouseWorldPosition - transform.position).normalized;
+        Vector2 direction = (cachedMouseWorldPosition - transform.position).normalized;
 
         // Calculate the angle to rotate the gun towards the mouse
-        float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + rotationOffset;
 
         // Apply rotation (smooth or instant)
         if (smoothRotation)
@@ -57,33 +48,50 @@ public class GunRotation : MonoBehaviour
             // Instant rotation
             transform.rotation = Quaternion.Euler(0f, 0f, targetAngle);
         }
-
     }
 
-
-    // Optional: Get mouse world position (useful for other scripts)
-    public Vector3 GetMouseWorldPosition()
+    // Calculate mouse world position (called once per frame)
+    private Vector3 CalculateMouseWorldPosition()
     {
-        if (Mouse.current == null) return Vector3.zero;
-
         Vector2 mouseScreenPosition = Mouse.current.position.ReadValue();
+
+        // For orthographic camera, Z value doesn't affect the result
         Vector3 mouseWorldPosition = mainCamera.ScreenToWorldPoint(new Vector3(
             mouseScreenPosition.x,
             mouseScreenPosition.y,
-            mainCamera.nearClipPlane
+            0f
         ));
 
-        mouseWorldPosition.z = transform.position.z;
+        mouseWorldPosition.z = 0f; // Keep it at 0 for 2D
         return mouseWorldPosition;
     }
 
-    // Optional: Check if mouse button is pressed
+    // Get cached mouse world position (efficient for other scripts to use)
+    public Vector3 GetMouseWorldPosition()
+    {
+        return cachedMouseWorldPosition;
+    }
+
+    // Get the current look angle (useful for bullet spawning)
+    public float GetLookAngle()
+    {
+        return transform.eulerAngles.z;
+    }
+
+    // Get the direction the gun is facing
+    public Vector2 GetLookDirection()
+    {
+        float angle = transform.eulerAngles.z * Mathf.Deg2Rad;
+        return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+    }
+
+    // Check if mouse button is pressed
     public bool IsMousePressed()
     {
         return Mouse.current != null && Mouse.current.leftButton.isPressed;
     }
 
-    // Optional: Check if mouse button was clicked this frame
+    // Check if mouse button was clicked this frame
     public bool IsMouseClicked()
     {
         return Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame;

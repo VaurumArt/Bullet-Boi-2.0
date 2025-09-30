@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Analytics;
+using UnityEngine.InputSystem;
 
 public class ParryScript : MonoBehaviour
 {
@@ -18,17 +19,22 @@ public class ParryScript : MonoBehaviour
     public Color activeParryColor = Color.purple;
     public Color inActiveParryColor = Color.blue;
     public Color CooldownParryColor = Color.yellow;
-    [Header("Parry Duration&Cooldown")]
-
+    [Header("Parry Duration & CD")]
+    
     public float parryDuration = 0.2f;
     public float parryCooldown = 0.5f;
     public float parryTickRate = 0.05f;
+    public float parrySpeedBoost = 300;
 
-    public Transform firePoint;
 
     void Start()
     {
         ParryColor = inActiveParryColor;
+    }
+    private void Update()
+    {
+     
+
     }
     public void OnParry()
     {
@@ -55,11 +61,21 @@ public class ParryScript : MonoBehaviour
             if(enemyBullet != null)
             {
                 Rigidbody2D rbBullet = projectile.GetComponent<Rigidbody2D>();
+
                 Vector2 newDirectrion;
-                Vector3 pointPost = firePoint.position;
-                newDirectrion = (pointPost - projectile.transform.position).normalized;
-                rbBullet.linearVelocity = newDirectrion * 100;
+                Vector2 screenMousePos = Mouse.current.position.ReadValue();
+                // Convert to world space (for 2D orthographic camera)
+                Vector3 worldMousePos3D = Camera.main.ScreenToWorldPoint(new Vector3(screenMousePos.x, screenMousePos.y, Camera.main.nearClipPlane));
+                Vector2 mouseWorldPos2D = (Vector2)worldMousePos3D;
+                // Calculate normalized direction from projectile to mouse
+                Vector2 newDirection = (mouseWorldPos2D - (Vector2)projectile.transform.position).normalized;
+
+              
+
+                rbBullet.linearVelocity = newDirection * parrySpeedBoost;
+
                 rbBullet.gameObject.layer = LayerMask.NameToLayer("PlayerProjectile");
+
                 rbBullet.gameObject.tag = "Bullet";
             
             }

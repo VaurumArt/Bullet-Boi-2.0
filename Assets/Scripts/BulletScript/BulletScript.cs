@@ -8,8 +8,8 @@ public class BulletScript : MonoBehaviour
     public float ricochetCount = 0f; // number of bullet bounce or ricochet. 
     public float requiredRicochet = 0f; // number of ricochet to be destory.
 
-  //  [Header("Ricochet Settings")]
-   // public bool maintainSpeed = true; // If true, bullet keeps same speed after ricochet
+    //  [Header("Ricochet Settings")]
+    // public bool maintainSpeed = true; // If true, bullet keeps same speed after ricochet
     //public float speedDecayPerRicochet = 0.9f; // Speed reduction per ricochet (if maintainSpeed is false)
 
     [Header("Optional Effects")]
@@ -19,7 +19,7 @@ public class BulletScript : MonoBehaviour
     private Rigidbody2D bulletRb;
     private AudioSource audioSource;
     private float originalSpeed;
-    public float speed = 50f; 
+
     void Start()
     {
         
@@ -30,10 +30,10 @@ public class BulletScript : MonoBehaviour
         {
             originalSpeed = bulletRb.linearVelocity.magnitude;
 
-            // Apply impulse once
-            BulletForce();
-            originalSpeed = speed;
+ 
         }
+
+   
     }
       
 
@@ -42,14 +42,21 @@ public class BulletScript : MonoBehaviour
 
     void Update()
     {
-
         bulletDuration -= Time.deltaTime;
         if (bulletDuration < 0)
         {
             DestroyBullet();
         }
+        BulletDeath();//If bullet it too slow apply gravity 
     }
 
+    public void BulletDeath()
+    {   if (bulletRb.linearVelocity.magnitude < 25f)
+        {
+            bulletRb.gravityScale = 5f;
+        }
+      
+    }
     public void DestroyBullet()
     {
         Destroy(gameObject);
@@ -77,10 +84,6 @@ public class BulletScript : MonoBehaviour
         }
     }
 
-    public void BulletForce()
-    {
-        bulletRb.AddForce(transform.right * speed , ForceMode2D.Impulse);
-    }
-  
+   
     
 }

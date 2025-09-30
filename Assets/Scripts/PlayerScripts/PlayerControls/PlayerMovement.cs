@@ -1,9 +1,15 @@
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Bite Speed Up")]
+    public float biteSpeedUpMult = 0.3f;
+
+  
+
     public float playerSpeed;
     [Header("Movement")]
     private Vector2 moveInput;
@@ -27,11 +33,16 @@ public class PlayerMovement : MonoBehaviour
     public GameObject meteoric;
     public GameObject devine;
 
+    private GameObject currentActiveTrail;
+    public Vector2 lookDirection;
+
+    WallBounceScript wallBounceScript;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         trailDisabler();
         rb = GetComponent<Rigidbody2D>();
+        wallBounceScript = GetComponent<WallBounceScript>();
     }
 
     // Update is called once per frame
@@ -50,11 +61,12 @@ public class PlayerMovement : MonoBehaviour
 
         playerSpeed = rb.linearVelocity.magnitude;
         TrailChecker();
+        LookDirection();
     }
 
     public void BiteSpeedup()
     {
-        rb.linearVelocity = rb.linearVelocity + (rb.linearVelocity * .3f); // add .3 of speed to the player after biting an enemy
+        rb.linearVelocity = rb.linearVelocity + (rb.linearVelocity * biteSpeedUpMult); // add .3 of speed to the player after biting an enemy
     }
 
     void trailDisabler()
@@ -85,56 +97,59 @@ public class PlayerMovement : MonoBehaviour
         moveInput = context.ReadValue<Vector2>();
 
     }
-    public void OnJump(InputAction.CallbackContext context)
-    {
-        if (isGrounded)
-        {
-            Debug.Log("Jump");
-            rb.AddForce(Vector2.up * jumpForce);    
-        }
 
+
+    public void LookDirection()
+    {
+        // Use the new Input System to get mouse position
+        Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
+        Vector3 mouseWolrdPos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
+        mouseWolrdPos.z = 0;
+
+        lookDirection = (mouseWolrdPos - transform.position).normalized;
     }
-
     #endregion
-    async Task TrailChecker()
+    void TrailChecker()
     {
+        GameObject trailTarget = null;
 
         if (playerSpeed >= 150f)
         {
-            fast.SetActive(false);
-            faster.SetActive(false);
-            fastest.SetActive(false);
-            meteoric.SetActive(false);
-            devine.SetActive(true);
+            trailTarget = devine;
         }
         else if (playerSpeed >= 120f)
         {
-            fast.SetActive(false);
-            faster.SetActive(false);
-            fastest.SetActive(false);
-            meteoric.SetActive(true);
+            trailTarget = meteoric;
         }
         else if (playerSpeed >= 90f)
         {
-            fast.SetActive(false);
-            faster.SetActive(false);
-            fastest.SetActive(true);
+            trailTarget = fastest;
         }
         else if (playerSpeed >= 60f)
         {
-            fast.SetActive(false);
-            faster.SetActive(true);
+            trailTarget = faster;
         }
         else if (playerSpeed >= 30f)
         {
 
-            fast.SetActive(true);
+            trailTarget = fast;
         }
-        else if (playerSpeed < 30f)
+      
+        if (trailTarget != currentActiveTrail)
         {
-            trailDisabler();
+            if (currentActiveTrail != null)
+            {
+                currentActiveTrail.SetActive(false);
+            }
+
+            if (trailTarget != null)
+            {
+                trailTarget.SetActive(true);
+            }
+            currentActiveTrail = trailTarget;
         }
     }
+      
 
 
 }
