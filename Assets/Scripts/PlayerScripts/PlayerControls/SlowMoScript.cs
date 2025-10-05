@@ -12,6 +12,7 @@ public class SlowMoScript : MonoBehaviour
 
     public float focusConsumeTime = .5f;
     public float focusReFillTime = 1f;
+    public bool isTimeStop = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -24,7 +25,11 @@ public class SlowMoScript : MonoBehaviour
     void Update()
     { 
         focusBar = Mathf.Clamp(focusBar,0, maxFocus);
-        if (isSlowMo && focusBar > 0)
+        FocusConsume();
+    }
+    void FocusConsume()
+    {
+        if (!isTimeStop && isSlowMo && focusBar > 0)
         {
             focusBar -= 30 * Time.unscaledDeltaTime;// fix this 
 
@@ -32,16 +37,24 @@ public class SlowMoScript : MonoBehaviour
             {
                 SlowMoReleased();
             }
-         //   StartCoroutine(ConsumeFocus());
+            //   StartCoroutine(ConsumeFocus());
         }
-        else if (!isSlowMo && focusBar < 100)
+        else if (!isTimeStop && !isSlowMo && focusBar < 100)
         {
             focusBar += 10 * Time.unscaledDeltaTime;
-          //  StartCoroutine(RefillFocus());
-        
+            //  StartCoroutine(RefillFocus());
+
         }
     }
 
+   public void TimeStopper ()
+    {
+        isTimeStop = true;
+    }
+   public  void TimeResume()
+    {
+        isTimeStop = false;
+    }
 
     public void OnSlowMo(InputAction.CallbackContext context)
     {

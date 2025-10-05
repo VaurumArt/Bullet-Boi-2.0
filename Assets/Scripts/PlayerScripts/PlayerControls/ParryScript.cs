@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class ParryScript : MonoBehaviour
 {
+    [SerializeField] ScoreSystemScript ScoreScript;
     [Header("Parry HurtBox")]
 
     public Transform parryCenter;
@@ -77,7 +78,7 @@ public class ParryScript : MonoBehaviour
                 rbBullet.linearVelocity = newDirection *( rbBullet.linearVelocity.magnitude* parrySpeedBoost);
 
                 rbBullet.gameObject.layer = LayerMask.NameToLayer("PlayerProjectile");
-
+                ScoreScript.SuccessfullParryScore();
                 rbBullet.gameObject.tag = "Bullet";
             
             }

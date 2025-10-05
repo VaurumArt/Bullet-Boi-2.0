@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class WallBounceTimeBasedScript : MonoBehaviour
 {
+    [SerializeField] ScoreSystemScript ScoreScript;
     [Header("Wall Bounce Detection")]
     public Transform PlayerCenter;
     public float range = 3f;
@@ -35,9 +36,12 @@ public class WallBounceTimeBasedScript : MonoBehaviour
 
     PlayerMovement playerMovement;
     Rigidbody2D rb;
+    SlowMoScript SlowMoScript;
+
 
     private void Start()
     {
+        SlowMoScript = GetComponent<SlowMoScript>();
         playerMovement = GetComponent<PlayerMovement>();
         rb = GetComponent<Rigidbody2D>();
         bounceColor = inActiveBounceColor;
@@ -47,17 +51,17 @@ public class WallBounceTimeBasedScript : MonoBehaviour
     {
         if (!isBouncing && canBounce && playerMovement.playerSpeed >= 30)
         {
-            Debug.Log("Bouncing!");
+           // Debug.Log("Bouncing!");
             StartCoroutine(BounceActivated());
         }
         else if (!canBounce)
         {
-            Debug.Log("Bounce is on Cooldown");
+           // Debug.Log("Bounce is on Cooldown");
         }
         else if (playerMovement.isGrounded)
         {
             rb.AddForce(Vector2.up * jumpForce);
-            Debug.Log("Jump");
+          //  Debug.Log("Jump");
         }
     }
 
@@ -68,7 +72,7 @@ public class WallBounceTimeBasedScript : MonoBehaviour
 
         if (!wallcheck)
         {
-            Debug.Log("No Wall Detected!");
+          //  Debug.Log("No Wall Detected!");
             return false;
         }
 
@@ -76,13 +80,15 @@ public class WallBounceTimeBasedScript : MonoBehaviour
         if (reactionTime <= perfectReaction)
         {
             StartCoroutine(BouncePauseTime());
-            Debug.Log("PERFECT");
+            //  Debug.Log("PERFECT");
+            ScoreScript.PerfectWallBounceScore();
             multiplier = perfectBounce;
         }
         else if (reactionTime <= goodReaction)
         {
+            ScoreScript.GoodWallBounceScore();
           //  StartCoroutine(BouncePauseTime());
-            Debug.Log("Good");
+          //  Debug.Log("Good");
             multiplier = goodBounce;
         }
         else
@@ -97,11 +103,13 @@ public class WallBounceTimeBasedScript : MonoBehaviour
     }
     IEnumerator BouncePauseTime()
     {
+        SlowMoScript.TimeStopper();
         Time.timeScale = bouncePauseFactor;
         Time.fixedDeltaTime = Time.timeScale * .02f;
         yield return new WaitForSecondsRealtime(bouncePause);
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;
+        SlowMoScript.TimeResume();
     }
     IEnumerator BounceActivated()
     {
@@ -134,7 +142,7 @@ public class WallBounceTimeBasedScript : MonoBehaviour
         yield return new WaitForSeconds(bounceCooldown);
         canBounce = true;
         bounceColor = inActiveBounceColor;
-        Debug.Log("Bounce is Available");
+    //    Debug.Log("Bounce is Available");
     }
 
     private void OnDrawGizmos()

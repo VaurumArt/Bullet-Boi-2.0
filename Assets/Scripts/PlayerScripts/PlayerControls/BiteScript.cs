@@ -4,6 +4,7 @@ using UnityEngine.Analytics;
 
 public class BiteScript : MonoBehaviour
 {
+    [SerializeField]ScoreSystemScript ScoreScript;
     [Header("Bite HurtBox")]
 
     public Transform attackPoint;
@@ -27,11 +28,11 @@ public class BiteScript : MonoBehaviour
     public float bitePauseFactor= 0;
     PlayerHP playerHP;
     PlayerMovement playerMovement;
-    // Update is called once per frame
-
+    SlowMoScript SlowMoScript;
+  
     private void Start()
     {
-     
+        SlowMoScript = GetComponent<SlowMoScript>();
         playerMovement =GetComponent<PlayerMovement>();
         playerHP = GetComponent<PlayerHP>();
         BiteColor = inActiveBiteColor;
@@ -42,14 +43,14 @@ public class BiteScript : MonoBehaviour
     {
         if (!isBiting && canBite)// Check if the player is already pressing the control and check if the cooldown of bite is ready
         {
-            Debug.Log("Bite!");
+         //   Debug.Log("Bite!");
 
             StartCoroutine(BiteActivated());
            
         }
         else if (!canBite)
         {
-            Debug.Log("Bite is on cooldown!");
+         //   Debug.Log("Bite is on cooldown!");
 
         }
 
@@ -80,12 +81,14 @@ public class BiteScript : MonoBehaviour
     }
     
     IEnumerator BitePauseTime()
-    {
+    {   
+        SlowMoScript.TimeStopper();
         Time.timeScale = bitePauseFactor;
         Time.fixedDeltaTime = Time.timeScale * .02f;
         yield return new WaitForSecondsRealtime(bitePause);
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;
+         SlowMoScript.TimeResume();
     }
     void PerformBite()
     {
@@ -103,7 +106,8 @@ public class BiteScript : MonoBehaviour
                 enemyHP.TakeDamage(biteDamage);
                 playerMovement.BiteSpeedup();
                 playerHP.BiteHeal();
-          
+                ScoreScript.BiteKillScore();
+
 
             }
             else
