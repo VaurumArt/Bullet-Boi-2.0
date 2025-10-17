@@ -4,21 +4,20 @@ using UnityEngine.InputSystem;
 
 public class SlowMoScript : MonoBehaviour
 {
-
+    [Header("Focus Time Slow")]
     public float slowMoFactor = 0.75f;
-    public bool isSlowMo = false;
-    public float focusBar = 50f;
+    [Header("Focus Bar")]
     public float maxFocus = 50f;
-
-    public float focusConsumeTime = .5f;
-    public float focusReFillTime = 1f;
-    public bool isTimeStop = false;
-
+    public float focusBar = 50f;
+    [Header("Focus Drain&Refill")]
+    public float focusConsumeTime = 30f;
+    public float focusReFillTime = 10f;
+    private bool isSlowMo = false;
+    private bool isTimeStop = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        focusBar = maxFocus;
-        
+        focusBar = maxFocus;  
     }
 
     // Update is called once per frame
@@ -31,8 +30,7 @@ public class SlowMoScript : MonoBehaviour
     {
         if (!isTimeStop && isSlowMo && focusBar > 0)
         {
-            focusBar -= 30 * Time.unscaledDeltaTime;// fix this 
-
+            focusBar -= focusConsumeTime * Time.unscaledDeltaTime;
             if (focusBar <= 0)
             {
                 SlowMoReleased();
@@ -41,7 +39,7 @@ public class SlowMoScript : MonoBehaviour
         }
         else if (!isTimeStop && !isSlowMo && focusBar < 100)
         {
-            focusBar += 10 * Time.unscaledDeltaTime;
+            focusBar += focusReFillTime * Time.deltaTime;
             //  StartCoroutine(RefillFocus());
 
         }

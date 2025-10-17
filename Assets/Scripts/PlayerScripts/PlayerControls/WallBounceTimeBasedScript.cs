@@ -6,33 +6,31 @@ using UnityEngine.InputSystem;
 public class WallBounceTimeBasedScript : MonoBehaviour
 {
     [SerializeField] ScoreSystemScript ScoreScript;
+    [Header("Wall Bounce Check")]
+    private bool isBouncing = false;
+    private bool canBounce = true;
+    private Color bounceColor;
+    public Color activeBounceColor = Color.yellow;
+    public Color inActiveBounceColor = Color.white;
+    public Color CooldownBounceColor = Color.white;
     [Header("Wall Bounce Detection")]
     public Transform PlayerCenter;
     public float range = 3f;
     public LayerMask WallLayers;
-
-    [Header("Wall Bounce Check")]
-    public bool isBouncing = false;
-    public bool canBounce = true;
-    public Color bounceColor;
-    public Color activeBounceColor = Color.purple;
-    public Color inActiveBounceColor = Color.blue;
-    public Color CooldownBounceColor = Color.yellow;
-
     [Header("Bounce Duration & CD")]
     public float bounceReadyDuration = 0.5f;
     public float bounceCooldown = 0.5f;
     public float bounceTickRate = 0.05f;
-
-    [Header("Reaction Time")]
+    [Header("Perfect Reaction Time")]
     public float perfectReaction = 0.2f;
-    public float goodReaction = 0.5f;
     public float perfectBounce = 1.25f;
+    public float bouncePause = 0.5f;
+    public float bouncePauseFactor = 0f;
+    [Header("Good Reaction Time")]
+    public float goodReaction = 0.5f;
     public float goodBounce = 1.0f;
     public float lateBounce = 0.5f;
     public float jumpForce = 750;
-    public float bouncePause =0.5f;
-    public float bouncePauseFactor = 0f;
 
     PlayerMovement playerMovement;
     Rigidbody2D rb;
@@ -67,15 +65,12 @@ public class WallBounceTimeBasedScript : MonoBehaviour
 
     bool PerformBounce(float reactionTime,float currentSpeed)
     {
-        
         Collider2D wallcheck = Physics2D.OverlapCircle(PlayerCenter.position, range, WallLayers);
-
         if (!wallcheck)
         {
           //  Debug.Log("No Wall Detected!");
             return false;
         }
-
         float multiplier;
         if (reactionTime <= perfectReaction)
         {
@@ -95,8 +90,6 @@ public class WallBounceTimeBasedScript : MonoBehaviour
         {
             multiplier = lateBounce;
         }
-            
-
         float newSpeed = currentSpeed * multiplier;
         rb.linearVelocity = playerMovement.lookDirection * newSpeed;
         return true;   
@@ -117,7 +110,6 @@ public class WallBounceTimeBasedScript : MonoBehaviour
         isBouncing = true;
         bounceColor = activeBounceColor;
         float elapsedTime = 0;
-
         while (elapsedTime < bounceReadyDuration)
         {
          bool bounceSuccessful =  PerformBounce(elapsedTime,currentSpeed);
@@ -125,7 +117,6 @@ public class WallBounceTimeBasedScript : MonoBehaviour
             {
                 break;
             }
- 
             yield return new WaitForSeconds(bounceTickRate);
             elapsedTime += bounceTickRate;
         }

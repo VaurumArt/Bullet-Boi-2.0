@@ -29,11 +29,23 @@ public class ScoreSystemScript : MonoBehaviour
     {
         mult = 1 + (combo * 0.1f);
         scoreText.text = score.ToString();
-        multText.text = mult.ToString()+"X";
-        comboText.text = combo.ToString();
+        multText.text = mult.ToString() + "X";
+
+        ComboDisplay();
         AirborneCheck();
         ComboStacker();
 
+    }
+    private void ComboDisplay()
+    {
+        if (combo > 0)
+        {
+            comboText.text = combo.ToString();
+        }
+        else
+        {
+            comboText.text = "";
+        }
     }
     private void ComboStacker()
     {

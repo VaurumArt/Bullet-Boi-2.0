@@ -6,42 +6,34 @@ using UnityEngine.InputSystem;
 public class ParryScript : MonoBehaviour
 {
     [SerializeField] ScoreSystemScript ScoreScript;
-    [Header("Parry HurtBox")]
+    [Header("Parry Checker")]
+    private bool isParrying = false;
+    private bool canParry = true;
+    private Color ParryColor;
+    public Color activeParryColor = Color.green;
+    public Color inActiveParryColor = Color.white;
+    public Color CooldownParryColor = Color.white;
 
+    [Header("Parry Detection")]
     public Transform parryCenter;
     public float range = 3f;
     public LayerMask projectileLayers;
 
-    [Header("Parry Checker")]
-
-    public bool isParrying = false;
-    public bool canParry = true;
-    public Color ParryColor;
-    public Color activeParryColor = Color.purple;
-    public Color inActiveParryColor = Color.blue;
-    public Color CooldownParryColor = Color.yellow;
+  
     [Header("Parry Duration & CD")]
-    
     public float parryDuration = 0.2f;
     public float parryCooldown = 0.5f;
     public float parryTickRate = 0.05f;
     public float parrySpeedBoost = 300;
-
-
     void Start()
     {
         ParryColor = inActiveParryColor;
-    }
-    private void Update()
-    {
-     
-
     }
     public void OnParry()
     {
         if (!isParrying && canParry)
         {
-       //     Debug.Log("Parrying!");
+            //     Debug.Log("Parrying!");
             StartCoroutine(ParryingActivated());
         }
         else if (!canParry)
@@ -51,20 +43,16 @@ public class ParryScript : MonoBehaviour
     }
     void PerformParry()
     {
-    
         Collider2D[] parriedProjectile = Physics2D.OverlapCircleAll(parryCenter.position, range, projectileLayers);//Hurt box to parry projectiles 
-
         foreach (Collider2D projectile in parriedProjectile)// Check each projectile that was parried 
         {
-       
-         //   Debug.Log("Parried " + projectile.name);
-         //   Debug.Log("Parried " + projectile.name);
-         //   Debug.Log("Parried " + projectile.name);
+            //   Debug.Log("Parried " + projectile.name);
+            //   Debug.Log("Parried " + projectile.name);
+            //   Debug.Log("Parried " + projectile.name);
             EnemyBullet enemyBullet = projectile.GetComponent<EnemyBullet>();
-            if(enemyBullet != null)
+            if (enemyBullet != null)
             {
                 Rigidbody2D rbBullet = projectile.GetComponent<Rigidbody2D>();
-
                 Vector2 newDirectrion;
                 Vector2 screenMousePos = Mouse.current.position.ReadValue();
                 // Convert to world space (for 2D orthographic camera)
@@ -72,20 +60,12 @@ public class ParryScript : MonoBehaviour
                 Vector2 mouseWorldPos2D = (Vector2)worldMousePos3D;
                 // Calculate normalized direction from projectile to mouse
                 Vector2 newDirection = (mouseWorldPos2D - (Vector2)projectile.transform.position).normalized;
-
-              
-
-                rbBullet.linearVelocity = newDirection *( rbBullet.linearVelocity.magnitude* parrySpeedBoost);
-
+                rbBullet.linearVelocity = newDirection * (rbBullet.linearVelocity.magnitude * parrySpeedBoost);
                 rbBullet.gameObject.layer = LayerMask.NameToLayer("PlayerProjectile");
                 ScoreScript.SuccessfullParryScore();
                 rbBullet.gameObject.tag = "Bullet";
-            
             }
-           
-                
         }
-
     }
     IEnumerator ParryingActivated()
     {
@@ -95,15 +75,12 @@ public class ParryScript : MonoBehaviour
         while (ElapsedTime < parryDuration)
         {
             PerformParry();
-
             yield return new WaitForSeconds(parryTickRate);
             ElapsedTime += parryTickRate;
         }
-
         isParrying = false;
         ParryColor = Color.blue;
         StartCoroutine(ParryingisCoolingdown());
-       
     }
     IEnumerator ParryingisCoolingdown()
     {
@@ -112,7 +89,7 @@ public class ParryScript : MonoBehaviour
         yield return new WaitForSeconds(parryCooldown);
         canParry = true;
         ParryColor = inActiveParryColor;
-       // Debug.Log("Parry is Available");
+        // Debug.Log("Parry is Available");
     }
     private void OnDrawGizmos()
     {

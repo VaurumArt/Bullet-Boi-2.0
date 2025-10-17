@@ -4,23 +4,19 @@ using UnityEngine.InputSystem;
 
 public class ShootAndTP : MonoBehaviour
 {
-    [Header("Bullet Info")]
+    [Header("Shooting")]
     public Transform firePoint;
     public GameObject bulletPrefab;
     public float bulletSpeed =40f;
-    // public float bulletSpeed = 50;
     public float momentumMulti = 0.5f; //Bullet momemtun to Player's Momentum Scaler
-
-
-
     private GameObject lastBullet;
     Vector2 lookDirection;
     float lookAngle;
-    private Rigidbody2D rb; // Class field - will be assigned in Start()
-
-    public bool isTeleporting = false; // Flag to disable movement control
-    public float teleportMomentumDuration = 1f; // How long momentum lasts
-
+    
+    public float teleportMomentumDuration = 4f; // How long momentum lasts
+  
+    private bool isTeleporting = false; // Flag to disable movement control
+    private Rigidbody2D rb;
     PlayerHP playerHP;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -94,20 +90,11 @@ public class ShootAndTP : MonoBehaviour
                     Vector2 bulletDirection = bulletVelocity.normalized;
                     rb.linearVelocity = bulletDirection * combinedSpeed;
                 }
-                  
-                // DEBUG: Check what the bullet's velocity actually is
-                 //  Debug.Log($"Bullet velocity when teleporting: {bulletVelocity}");
-               // Debug.Log($"Bullet X: {bulletVelocity.x}, Bullet Y: {bulletVelocity.y}");
-
                 // Teleport to bullet position
                 transform.position = lastBullet.transform.position;
                 // Set teleport flag and start momentum timer
                 isTeleporting = true;
                 StartCoroutine(EndTeleportMomentum());
-
-                   // DEBUG: Check what velocity we're setting on player
-                 //  Debug.Log($"Player velocity after teleport: {rb.linearVelocity}");
-                 //  Debug.Log($"Player X: {rb.linearVelocity.x}, Player Y: {rb.linearVelocity.y}");
 
                 // NOW destroy the bullet and clear reference (AFTER getting velocity!)
                 Destroy(lastBullet);

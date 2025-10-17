@@ -7,21 +7,16 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Bite Speed Up")]
     public float biteSpeedUpMult = 0.3f;
-
-  
-
     public float playerSpeed;
-    [Header("Movement")]
-    private Vector2 moveInput;
-    public float moveSpeed = 5.0f;
-    private Rigidbody2D rb;
-    public float requiredSpeed = 10f;
-    public bool isBraked;
-    public float jumpForce = 5f;
 
+    [Header("Movements")]
+    public float moveSpeed = 25.0f;
+    public float requiredSpeed = 20f;
+    public float jumpForce = 5f;
+    private bool isBraked;
 
     [Header("Ground Checker")]
-    public bool isGrounded;
+    public bool isGrounded;// cannot be private other script is accessing it 
     public Transform groundCheck;
     public LayerMask groundLayers;
     public float groundCheckRadius = .5f;
@@ -33,7 +28,11 @@ public class PlayerMovement : MonoBehaviour
     public GameObject meteoric;
     public GameObject devine;
 
+
     private GameObject currentActiveTrail;
+    private Rigidbody2D rb;
+    private Vector2 moveInput;
+
     public Vector2 lookDirection;
 
     WallBounceScript wallBounceScript;
