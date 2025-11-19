@@ -84,7 +84,7 @@ public class ScoreSystemScript : MonoBehaviour
         combo++; 
         comboTimer = 0;
     }
-    public void SpeedKillScore()
+    public void BulletKillScore()
     {
         score += 100 * GetMultiplier();
         combo++; 

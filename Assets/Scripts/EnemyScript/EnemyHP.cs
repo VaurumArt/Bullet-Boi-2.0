@@ -3,10 +3,13 @@ using UnityEngine;
 
 public class EnemyHP : MonoBehaviour
 {
+    public GameObject bloodSplatter;
+    public Transform bloodTransform;
     
     public float maxHealth = 10f;
     public float currentHealth;
-    public float lethalSpeed = 30f;
+    public float deathSpeed = 30f;
+
 
     ScoreSystemScript scoreSystemScript;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -29,9 +32,10 @@ public class EnemyHP : MonoBehaviour
 
     public void TakeDamage( float damage)
     {
-
+       
         currentHealth = currentHealth - damage;
-     
+      
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -42,9 +46,9 @@ public class EnemyHP : MonoBehaviour
           
             float playerSpeed = playerRb.linearVelocity.magnitude;
 
-            if (playerSpeed >= lethalSpeed) //Check if the player speed is fast enough to kill the enemy 
+            if (playerSpeed >= deathSpeed) //Check if the player speed is fast enough to kill the enemy 
             {
-                scoreSystemScript.RamKillScore();
+
                 Die();
             }
 
@@ -52,14 +56,19 @@ public class EnemyHP : MonoBehaviour
         if (collision.gameObject.CompareTag("Bullet"))
         {
 
-         
+
             Die();
 
         }
+        
+        
     }
     public void Die()
     {
+        scoreSystemScript.BiteKillScore();
         Debug.Log("Basic Enemy Died");
+        Instantiate(bloodSplatter, bloodTransform.position, bloodTransform.rotation);
         Destroy(gameObject);
     }
+  
 }

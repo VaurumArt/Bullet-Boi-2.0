@@ -26,7 +26,7 @@ public class CameraSpeedOffSet : MonoBehaviour
 
         }
       
-        Debug.Log($"Velocity: {playerRb.linearVelocity}, New Offset: {newOffset}, Camera Pos: {vm.transform.position}");
+     //   Debug.Log($"Velocity: {playerRb.linearVelocity}, New Offset: {newOffset}, Camera Pos: {vm.transform.position}");
     }
 }
 
