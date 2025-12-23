@@ -7,12 +7,12 @@ public class BulletScript : MonoBehaviour
     public float bulletDuration = 3f;
     public float ricochetCount = 0f; // number of bullet bounce or ricochet. 
     public float requiredRicochet = 0f; // number of ricochet to be destory.
+    public float  bulletDamage;
+ //  [Header("Ricochet Settings")]
+ // public bool maintainSpeed = true; // If true, bullet keeps same speed after ricochet
+ //public float speedDecayPerRicochet = 0.9f; // Speed reduction per ricochet (if maintainSpeed is false)
 
-    //  [Header("Ricochet Settings")]
-    // public bool maintainSpeed = true; // If true, bullet keeps same speed after ricochet
-    //public float speedDecayPerRicochet = 0.9f; // Speed reduction per ricochet (if maintainSpeed is false)
-
-    [Header("Optional Effects")]
+ [Header("Optional Effects")]
     public GameObject sparkEffect; // Assign spark effect prefab
     public AudioClip ricochetSound; // Assign ricochet sound
 

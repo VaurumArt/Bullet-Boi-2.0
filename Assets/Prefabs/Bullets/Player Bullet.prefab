@@ -103,7 +103,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.4
   m_LinearDamping: 0
   m_AngularDamping: 0
   m_GravityScale: 0
@@ -133,6 +133,7 @@ MonoBehaviour:
   bulletDuration: 10
   ricochetCount: 1
   requiredRicochet: 1
+  bulletDamage: 5
   sparkEffect: {fileID: 0}
   ricochetSound: {fileID: 0}
 --- !u!61 &-2221045952829773570

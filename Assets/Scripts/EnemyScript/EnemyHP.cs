@@ -55,10 +55,8 @@ public class EnemyHP : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Bullet"))
         {
-
-
-            Die();
-
+            BulletScript bulletInfo = collision.gameObject.GetComponent<BulletScript>();
+            TakeDamage(bulletInfo.bulletDamage);
         }
         
         

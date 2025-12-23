@@ -47,6 +47,7 @@ public class WallBounceTimeBasedScript : MonoBehaviour
 
     public void OnJump()
     {
+    
         if (!isBouncing && canBounce && playerMovement.playerSpeed >= 30)
         {
            // Debug.Log("Bouncing!");
