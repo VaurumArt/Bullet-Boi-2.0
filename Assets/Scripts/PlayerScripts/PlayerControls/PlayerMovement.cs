@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movements")]
     public float moveSpeed = 25.0f;
+    public float moveAirSpeed = 5.0f;
     public float requiredSpeed = 20f;
     public float jumpForce = 5f;
     private bool isBraked;
@@ -56,9 +57,14 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
         }
+        // When the movement is activated while in air it overrides the movement making the player stop mid air 
+        //else
+        //{
+        //    rb.linearVelocity = new Vector2(moveInput.x * moveAirSpeed, rb.linearVelocity.y);
+        //}
 
 
-        playerSpeed = rb.linearVelocity.magnitude;
+            playerSpeed = rb.linearVelocity.magnitude;
         TrailChecker();
         LookDirection();
     }
