@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e46faa013dc1a52498e910d9e78c1cbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletDuration: 10
+  bulletDuration: 6
   ricochetCount: 1
   requiredRicochet: 1
   bulletDamage: 5

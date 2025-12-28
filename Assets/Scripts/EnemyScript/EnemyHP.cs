@@ -1,4 +1,5 @@
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Collections;
 using UnityEngine;
 
 public class EnemyHP : MonoBehaviour
@@ -10,6 +11,10 @@ public class EnemyHP : MonoBehaviour
     public float currentHealth;
     public float deathSpeed = 30f;
 
+    public Color normalColor = Color.white;
+    public Color damagedColor = Color.red;
+    public float damageFrame = 0.5f;
+    public SpriteRenderer enemyBody; 
 
     ScoreSystemScript scoreSystemScript;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -32,9 +37,9 @@ public class EnemyHP : MonoBehaviour
 
     public void TakeDamage( float damage)
     {
-       
+        StartCoroutine(DamageIndicator());
         currentHealth = currentHealth - damage;
-      
+       
 
     }
 
@@ -48,7 +53,6 @@ public class EnemyHP : MonoBehaviour
 
             if (playerSpeed >= deathSpeed) //Check if the player speed is fast enough to kill the enemy 
             {
-
                 Die();
             }
 
@@ -68,5 +72,12 @@ public class EnemyHP : MonoBehaviour
         Instantiate(bloodSplatter, bloodTransform.position, bloodTransform.rotation);
         Destroy(gameObject);
     }
-  
+
+    IEnumerator DamageIndicator()
+    {
+        enemyBody.color = damagedColor;
+        yield return  new WaitForSeconds(damageFrame);
+        enemyBody.color = normalColor;
+
+    }
 }

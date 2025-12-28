@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
+
 
 public class PlayerShooting : MonoBehaviour
 {
@@ -7,11 +9,20 @@ public class PlayerShooting : MonoBehaviour
     public Transform firePoint;
     public GameObject bulletPrefab;
     public float bulletSpeed = 40f;
+    public float shootCooldown=.5f;
+    public bool canShoot = true;
 
     private Vector2 lookDirection;
     private float lookAngle;
     private GameObject lastBullet;
+    PlayerHP playerHP;
 
+    private void Awake()
+    {
+        playerHP = GetComponent<PlayerHP>();
+
+    }
+  
     void Update()
     {
         UpdateAimDirection();
@@ -34,12 +45,30 @@ public class PlayerShooting : MonoBehaviour
 
     public void OnFire(InputAction.CallbackContext context)
     {
-        if (context.performed)
-        {
-            Shoot();
-        }
+       
+            if (context.performed)
+            {
+            if (canShoot)
+            {
+                Shoot();
+                playerHP.bulletHealthDrain();
+                StartCoroutine(ShootCooldown());
+            }
+            else
+            {
+                Debug.Log("ShootCooldown");
+            }
+      
+            }
+        
     }
 
+    public IEnumerator ShootCooldown()
+    {
+        canShoot= false;
+        yield return new WaitForSeconds (shootCooldown);
+        canShoot = true;
+    }
     private void Shoot()
     {
         //// Destroy previous bullet if it exists

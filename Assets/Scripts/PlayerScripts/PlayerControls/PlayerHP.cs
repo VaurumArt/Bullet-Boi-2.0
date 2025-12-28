@@ -1,5 +1,6 @@
-using UnityEngine;
 using System.Collections;
+using System.Runtime.ConstrainedExecution;
+using UnityEngine;
 public class PlayerHP : MonoBehaviour
 {
     [Header("Player Stats")]
@@ -14,6 +15,8 @@ public class PlayerHP : MonoBehaviour
     public float invulnerableFramesDuration = .5f;
     public float numFlashes = 4f;
 
+    public Color iFramesColor = new Color(1, 0.8f, 0, 1);
+    public Color normFramesColor = new Color(1, 0, 0, .5f);
     public SpriteRenderer headRend;
     public SpriteRenderer bodyRend;
     PlayerMovement PlayerMovement;
@@ -75,13 +78,14 @@ public class PlayerHP : MonoBehaviour
         Physics2D.IgnoreLayerCollision(6, 10, true);
         for (int i = 0; i < numFlashes; i++)
         {
-        
-            bodyRend.color = new Color(1, 0, 0, .5f);
-            headRend.color = new Color(1, 0, 0, .5f);
+            bodyRend.color = iFramesColor;
+            headRend.color = iFramesColor;
+
+
             yield return new WaitForSeconds(invulnerableFramesDuration / (numFlashes*2));
-       
-            bodyRend.color = new Color(1, 0.8f, 0, 1);
-            headRend.color = new Color(1, 0.8f, 0, 1);
+
+            bodyRend.color = normFramesColor;
+            headRend.color = normFramesColor;
             yield return new WaitForSeconds(invulnerableFramesDuration / (numFlashes * 2));    
         }
         Physics2D.IgnoreLayerCollision(6, 7,false);
