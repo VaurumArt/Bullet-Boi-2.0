@@ -289,7 +289,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 3
       scalar: 0.3
-      minScalar: 0.5
+      minScalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -3743,7 +3743,7 @@ ParticleSystem:
     m_Bounce:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -4049,7 +4049,7 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    minVertexDistance: 1
+    minVertexDistance: 0.2
     textureMode: 0
     textureScale: {x: 2, y: 0.2}
     ribbonCount: 1
@@ -4839,8 +4839,8 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
-  - {fileID: 2100000, guid: e823cd5b5d27c0f4b8256e7c12ee3e6d, type: 2}
+  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

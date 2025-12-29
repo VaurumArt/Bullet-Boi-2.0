@@ -321,7 +321,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1c8df9490efb20458ec07d8d4e8dc1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bloodSplatter: {fileID: 6823200998282874702, guid: 8f8fe12323625f5499b2853dd2ad3e58, type: 3}
+  bloodSplatter: {fileID: 3925514410565187232, guid: 1c97216256ce3994b872a6435b524edd, type: 3}
   bloodTransform: {fileID: 3219001733980324426}
   maxHealth: 10
   currentHealth: 10
