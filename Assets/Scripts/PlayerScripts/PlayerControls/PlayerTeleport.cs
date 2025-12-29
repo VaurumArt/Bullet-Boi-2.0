@@ -11,7 +11,8 @@ public class PlayerTeleport : MonoBehaviour
     private Rigidbody2D rb;
     private PlayerShooting playerShooting;
     private bool isTeleporting = false;
-
+    public float teleportCooldown =1.5f;
+    private bool canTeleport = true; 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -27,12 +28,22 @@ public class PlayerTeleport : MonoBehaviour
     {
         if (context.started)
         {
-            TryTeleport();
+            if (canTeleport)
+            {
+                TryTeleport();
+            }
+          
         }
     }
 
+   public  IEnumerator TeleportCooldown()
+    {   canTeleport = false;
+        yield return new WaitForSeconds(teleportCooldown);
+        canTeleport = true;
+    }
     private void TryTeleport()
     {
+
         GameObject lastBullet = playerShooting.GetLastBullet();
 
         if (lastBullet == null)
@@ -73,6 +84,7 @@ public class PlayerTeleport : MonoBehaviour
         // Destroy bullet and clear reference
         Destroy(lastBullet);
         playerShooting.ClearLastBullet();
+        StartCoroutine(TeleportCooldown());
     }
 
     private float CalculateCombinedSpeed(float playerSpeed, float bulletSpeed)
