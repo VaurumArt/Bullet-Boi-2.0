@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Unity.VisualScripting;
@@ -29,7 +30,10 @@ public class PlayerMovement : MonoBehaviour
     public GameObject meteoric;
     public GameObject devine;
 
+    public float knockbackForce = 10f;
+    public float knockbackDuration = 0.3f;
 
+    private bool isKnockedBack = false;
     private GameObject currentActiveTrail;
     private Rigidbody2D rb;
     private Vector2 moveInput;
@@ -74,6 +78,30 @@ public class PlayerMovement : MonoBehaviour
         rb.linearVelocity = rb.linearVelocity + (rb.linearVelocity * biteSpeedUpMult); // add .3 of speed to the player after biting an enemy
     }
 
+    public void PlayerKnockBack(Vector2 direction)
+    {
+if (!isKnockedBack)
+        {
+            StartCoroutine(KnockBackCoroutine(direction));
+                   
+        }
+    }
+
+    private IEnumerator KnockBackCoroutine(Vector2 direction)
+    {
+        isKnockedBack = true;
+
+        // Add upward component for arc effect
+        Vector2 knockback = new Vector2(direction.x, 0.5f).normalized * knockbackForce;
+
+        rb.linearVelocity = Vector2.zero;
+        rb.AddForce(knockback, ForceMode2D.Impulse);
+
+        yield return new WaitForSeconds(knockbackDuration);
+
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x * 0.5f, rb.linearVelocity.y); // Slow down
+        isKnockedBack = false;
+    }
     void trailDisabler()
     {
         fast.SetActive(false);
@@ -83,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
         devine.SetActive(false);
 
     }
-   
+
     void BrakeCheck()
     {
         // add an animation that the character is trying to counter act the speed 

@@ -5,7 +5,8 @@ using UnityEngine.Rendering.Universal.Internal;
 public class EnemyBullet : MonoBehaviour
 {
     Rigidbody2D bulletRb;
-    GameObject target; 
+    GameObject target;
+    public float damage;
     public float speed;
     public float bulletLifeTimer = 10;
     private void Start()

@@ -53,7 +53,7 @@ public class EnemyHP : MonoBehaviour
 
             if (playerSpeed >= deathSpeed) //Check if the player speed is fast enough to kill the enemy 
             {
-                Die();
+                TakeDamage(50);
             }
 
         }

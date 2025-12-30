@@ -32,11 +32,17 @@ public class PlayerHP : MonoBehaviour
       health = Mathf.Clamp(health, 0, maxHealth);
     }
 
+    public void PlayerTakeDamage(float damage)
+    {
+
+        health = health - damage;
+    }
       public void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("EnemyBullet"))
         {
-            health = health - 10f;
+            EnemyBullet enemyBullet = collision.gameObject.GetComponent<EnemyBullet>();
+            PlayerTakeDamage(enemyBullet.damage);
             StartCoroutine(Invunerability());
         }
     }
@@ -62,7 +68,14 @@ public class PlayerHP : MonoBehaviour
         {
             if (PlayerMovement.playerSpeed < 30)
             {
-                health = health - 10f;
+                EnemyInfo enemyInfo =collision.gameObject.GetComponent<EnemyInfo>();
+
+                // Calculate direction: (Player position - Enemy position)
+                Vector2 knockbackDirection = (transform.position - collision.transform.position).normalized;
+
+                PlayerMovement.PlayerKnockBack(knockbackDirection);
+                PlayerTakeDamage(enemyInfo.contactDamage);
+
                 StartCoroutine(Invunerability());
             }
             else
