@@ -50,8 +50,8 @@ public class EnemyHP : MonoBehaviour
        Rigidbody2D playerRb =collision.gameObject.GetComponent<Rigidbody2D>();
           
             float playerSpeed = playerRb.linearVelocity.magnitude;
-
-            if (playerSpeed >= deathSpeed) //Check if the player speed is fast enough to kill the enemy 
+            PlayerMovement playermovment = collision.gameObject.GetComponent<PlayerMovement>();
+            if (!playermovment.isKnockedBack && playerSpeed >= deathSpeed) //Check if the player speed is fast enough to kill the enemy 
             {
                 TakeDamage(50);
             }

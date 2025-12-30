@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
     public float knockbackForce = 10f;
     public float knockbackDuration = 0.3f;
 
-    private bool isKnockedBack = false;
+    public bool isKnockedBack = false;
     private GameObject currentActiveTrail;
     private Rigidbody2D rb;
     private Vector2 moveInput;
@@ -52,23 +52,26 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-
         BrakeCheck();
         GroundCheck();
-        //&& isBraked
-        if (isGrounded ) //Check if Player isGrounded and current speed is lower that required speed the player can move 
+
+        if (isGrounded && isBraked && !isKnockedBack)
         {
-            rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
+            if (moveInput.x != 0) // Only change velocity when pressing movement keys
+            {
+                rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
+            }
+            else
+            {
+                // Apply friction/slowdown when not moving
+                rb.linearVelocity = new Vector2(
+                    rb.linearVelocity.x * 0.95f, // Adjust this value (0.9 - 0.98)
+                    rb.linearVelocity.y
+                );
+            }
         }
-        // When the movement is activated while in air it overrides the movement making the player stop mid air 
-        //else
-        //{
-        //    rb.linearVelocity = new Vector2(moveInput.x * moveAirSpeed, rb.linearVelocity.y);
-        //}
 
-
-            playerSpeed = rb.linearVelocity.magnitude;
+        playerSpeed = rb.linearVelocity.magnitude;
         TrailChecker();
         LookDirection();
     }
