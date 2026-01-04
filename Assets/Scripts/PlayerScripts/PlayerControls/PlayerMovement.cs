@@ -23,18 +23,13 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask groundLayers;
     public float groundCheckRadius = .5f;
 
-    [HeaderAttribute("Trails")]
-    public GameObject fast;
-    public GameObject faster;
-    public GameObject fastest;
-    public GameObject meteoric;
-    public GameObject devine;
+
 
     public float knockbackForce = 10f;
     public float knockbackDuration = 0.3f;
 
     public bool isKnockedBack = false;
-    private GameObject currentActiveTrail;
+
     private Rigidbody2D rb;
     private Vector2 moveInput;
 
@@ -44,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        trailDisabler();
+
         rb = GetComponent<Rigidbody2D>();
         wallBounceScript = GetComponent<WallBounceScript>();
     }
@@ -72,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         playerSpeed = rb.linearVelocity.magnitude;
-        TrailChecker();
+
         LookDirection();
     }
 
@@ -83,10 +78,10 @@ public class PlayerMovement : MonoBehaviour
 
     public void PlayerKnockBack(Vector2 direction)
     {
-if (!isKnockedBack)
+        if (!isKnockedBack)
         {
             StartCoroutine(KnockBackCoroutine(direction));
-                   
+
         }
     }
 
@@ -105,15 +100,7 @@ if (!isKnockedBack)
         rb.linearVelocity = new Vector2(rb.linearVelocity.x * 0.5f, rb.linearVelocity.y); // Slow down
         isKnockedBack = false;
     }
-    void trailDisabler()
-    {
-        fast.SetActive(false);
-        faster.SetActive(false);
-        fastest.SetActive(false);
-        meteoric.SetActive(false);
-        devine.SetActive(false);
 
-    }
 
     void BrakeCheck()
     {
@@ -145,47 +132,8 @@ if (!isKnockedBack)
         lookDirection = (mouseWolrdPos - transform.position).normalized;
     }
     #endregion
-    void TrailChecker()
-    {
-        GameObject trailTarget = null;
 
-        if (playerSpeed >= 150f)
-        {
-            trailTarget = devine;
-        }
-        else if (playerSpeed >= 120f)
-        {
-            trailTarget = meteoric;
-        }
-        else if (playerSpeed >= 90f)
-        {
-            trailTarget = fastest;
-        }
-        else if (playerSpeed >= 60f)
-        {
-            trailTarget = faster;
-        }
-        else if (playerSpeed >= 30f)
-        {
 
-            trailTarget = fast;
-        }
-      
-        if (trailTarget != currentActiveTrail)
-        {
-            if (currentActiveTrail != null)
-            {
-                currentActiveTrail.SetActive(false);
-            }
-
-            if (trailTarget != null)
-            {
-                trailTarget.SetActive(true);
-            }
-            currentActiveTrail = trailTarget;
-        }
-    }
-      
 
 
 }
