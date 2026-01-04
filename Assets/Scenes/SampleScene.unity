@@ -662,8 +662,8 @@ GameObject:
   - component: {fileID: 79851848}
   - component: {fileID: 79851850}
   m_Layer: 0
-  m_Name: Square
-  m_TagString: Untagged
+  m_Name: Crate
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -755,7 +755,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.86415094, g: 0.630178, b: 0.39620498, a: 1}
+  m_Color: {r: 0.7283019, g: 0.49188957, b: 0.25147024, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1450,7 +1450,7 @@ Transform:
   m_GameObject: {fileID: 205949925}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.14, y: -0.012000054, z: 0}
+  m_LocalPosition: {x: 0.12, y: 0.071, z: 0}
   m_LocalScale: {x: 0.6666667, y: 1, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1500,7 +1500,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 6
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: fb29611e8fac9be489bb57f579cf2862, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1939,7 +1939,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &257528070
 Transform:
   m_ObjectHideFlags: 0
@@ -4656,13 +4656,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 538991053}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.214, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.07, y: 0.84800005, z: 0}
+  m_LocalScale: {x: 3, y: 2, z: 0.49088}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 205949926}
-  m_Father: {fileID: 1336143108}
+  m_Father: {fileID: 1221568365}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &538991055
 MonoBehaviour:
@@ -4679,7 +4679,7 @@ MonoBehaviour:
   smoothRotation: 1
   rotationSpeed: 100
   rotationOffset: 0
-  gunSpriteRenderer: {fileID: 0}
+  gunSpriteRenderer: {fileID: 205949928}
 --- !u!1 &541726176
 GameObject:
   m_ObjectHideFlags: 0
@@ -10139,6 +10139,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1470178222}
+  - {fileID: 538991054}
   - {fileID: 1336143108}
   - {fileID: 1872295446}
   - {fileID: 1939843145}
@@ -10530,8 +10531,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcab9a9b84021454a876526f545fa2e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 1470178225}
   ScoreScript: {fileID: 1274086554}
-  activeBiteColor: {r: 0, g: 1, b: 0, a: 1}
+  activeBiteColor: {r: 1, g: 1, b: 1, a: 1}
   inActiveBiteColor: {r: 1, g: 1, b: 1, a: 0}
   cooldownBiteColor: {r: 1, g: 1, b: 1, a: 0}
   attackPoint: {fileID: 541802365}
@@ -10540,7 +10542,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   biteDuration: 0.3
-  biteCooldown: 0.42
+  biteCooldown: 0.2
   biteDamage: 50
   biteTickRate: 0.05
   bitePause: 0.5
@@ -11475,8 +11477,7 @@ Transform:
   m_LocalPosition: {x: 0.07, y: 0.42, z: 0}
   m_LocalScale: {x: 3, y: 2, z: 0.49088}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 538991054}
+  m_Children: []
   m_Father: {fileID: 1221568365}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1336143109
@@ -12549,6 +12550,8 @@ GameObject:
   - component: {fileID: 1470178222}
   - component: {fileID: 1470178224}
   - component: {fileID: 1470178223}
+  - component: {fileID: 1470178226}
+  - component: {fileID: 1470178225}
   m_Layer: 0
   m_Name: BulletBoi temp head
   m_TagString: Untagged
@@ -12567,7 +12570,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.02, y: 1.38, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 0}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 541802365}
   - {fileID: 28065836}
@@ -12585,7 +12588,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b24e459565851a6498da9a655883c535, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smoothRotation: 1
+  smoothRotation: 0
   rotationSpeed: 100
   rotationOffset: 0
   gunSpriteRenderer: {fileID: 0}
@@ -12633,7 +12636,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 6
-  m_Sprite: {fileID: 21300000, guid: 84e6b07d541bb1e4188b6d5f4b870432, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 525ec2de6e3355b41a87326c9a39f672, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -12644,6 +12647,46 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &1470178225
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1470178221}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6268e1ae926b4a84b8da912d1e668e57, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!111 &1470178226
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1470178221}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Animation: {fileID: 0}
+  m_Animations:
+  - {fileID: 7400000, guid: 65ecdf3554a1dab4a8dc47cfb6a465e6, type: 2}
+  - {fileID: 7400000, guid: 0f2c0e3b585c0c944b4b016fe4e1fe96, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_UpdateMode: 0
+  m_CullingType: 0
 --- !u!1001 &1475367140
 PrefabInstance:
   m_ObjectHideFlags: 0

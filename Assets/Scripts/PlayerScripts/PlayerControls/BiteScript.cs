@@ -4,6 +4,7 @@ using UnityEngine.Analytics;
 
 public class BiteScript : MonoBehaviour
 {
+    public Animator animator;
     [SerializeField] ScoreSystemScript ScoreScript;
 
     [Header("Bite Dectection HitBox")]
@@ -35,6 +36,7 @@ public class BiteScript : MonoBehaviour
 
     private void Start()
     {
+        animator = GetComponentInChildren<Animator>();
         SlowMoScript = GetComponent<SlowMoScript>();
         playerMovement = GetComponent<PlayerMovement>();
         playerHP = GetComponent<PlayerHP>();
@@ -47,6 +49,7 @@ public class BiteScript : MonoBehaviour
         if (!isBiting && canBite)// Check if the player is already pressing the control and check if the cooldown of bite is ready
         {
             //   Debug.Log("Bite!");
+
             StartCoroutine(BiteActivated());
         }
         else if (!canBite)
@@ -66,9 +69,12 @@ public class BiteScript : MonoBehaviour
         while (elapsedTime < biteDuration)
         {
             PerformBite();
+            animator.SetBool("IsBiting", true);
             yield return new WaitForSeconds(biteTickRate);
+          
             elapsedTime += biteTickRate;
         }
+        animator.SetBool("IsBiting", false);
         BiteColor = inActiveBiteColor;
         isBiting = false;
         StartCoroutine(BiteCoolingDown());
