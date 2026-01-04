@@ -678,7 +678,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -28.9, y: 12.07, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1335683504}
@@ -828,7 +828,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &95127796
 Transform:
   m_ObjectHideFlags: 0
@@ -2932,7 +2932,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &360438198
 Transform:
   m_ObjectHideFlags: 0
@@ -8238,7 +8238,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &974524527
 Transform:
   m_ObjectHideFlags: 0
@@ -10047,6 +10047,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1221568365}
+  - component: {fileID: 1221568382}
   - component: {fileID: 1221568367}
   - component: {fileID: 1221568370}
   - component: {fileID: 1221568380}
@@ -10160,6 +10161,9 @@ MonoBehaviour:
   momentumMultiplier: 0.6
   teleportMomentumDuration: 1
   teleportCooldown: 0.5
+  minimumTeleportSpeed: 35
+  speedAdditionMultiplier: 0
+  maxTeleportSpeed: 200
 --- !u!114 &1221568367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10679,6 +10683,28 @@ MonoBehaviour:
   bulletSpeed: 60
   shootCooldown: 0.05
   canShoot: 1
+--- !u!114 &1221568382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1221568363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74b89a078c369af42a0b56424e5b6cff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fast: {fileID: 1430231086}
+  rapid: {fileID: 596253354}
+  blazing: {fileID: 1199346079}
+  sonic: {fileID: 1441076708}
+  lightspeed: {fileID: 391795309}
+  fastSpeed: 30
+  rapidSpeed: 60
+  blazingSpeed: 90
+  sonicSpeed: 120
+  lightSpeed: 150
 --- !u!1 &1241403070
 GameObject:
   m_ObjectHideFlags: 0
@@ -13136,7 +13162,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1569664617
 Transform:
   m_ObjectHideFlags: 0
@@ -13605,7 +13631,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1654580551
 Transform:
   m_ObjectHideFlags: 0
@@ -16804,7 +16830,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1978642739
 Transform:
   m_ObjectHideFlags: 0
