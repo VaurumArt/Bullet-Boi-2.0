@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 6cf3ec45bb94f214dbc9df634910609e
+guid: 349ee61d05723224189cd2afeeebb887
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2483854608152357780
-    second: Bite_0002_0
+      213: -8762968982133037620
+    second: Bite Refine_0004_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Bite_0002_0
+      name: Bite Refine_0004_0
       rect:
         serializedVersion: 2
-        x: 469
-        y: 550
-        width: 803
-        height: 457
+        x: 268
+        y: 206
+        width: 1327
+        height: 865
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c649c57d463978dd0800000000000000
-      internalID: -2483854608152357780
+      spriteID: cc5a132932ea36680800000000000000
+      internalID: -8762968982133037620
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Bite_0002_0: -2483854608152357780
+      Bite Refine_0004_0: -8762968982133037620
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
