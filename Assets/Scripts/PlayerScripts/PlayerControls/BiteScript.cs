@@ -33,10 +33,10 @@ public class BiteScript : MonoBehaviour
     PlayerHP playerHP;
     PlayerMovement playerMovement;
     SlowMoScript SlowMoScript;
-
+    AnimationHandler animationHandler;
     private void Start()
     {
-        animator = GetComponentInChildren<Animator>();
+        animationHandler = GetComponent<AnimationHandler>();
         SlowMoScript = GetComponent<SlowMoScript>();
         playerMovement = GetComponent<PlayerMovement>();
         playerHP = GetComponent<PlayerHP>();
@@ -69,12 +69,14 @@ public class BiteScript : MonoBehaviour
         while (elapsedTime < biteDuration)
         {
             PerformBite();
-            animator.SetBool("IsBiting", true);
+            animationHandler.BiteAnimationOn();
+            
             yield return new WaitForSeconds(biteTickRate);
           
             elapsedTime += biteTickRate;
         }
-        animator.SetBool("IsBiting", false);
+        animationHandler.BiteAnimationOff();
+  
         BiteColor = inActiveBiteColor;
         isBiting = false;
         StartCoroutine(BiteCoolingDown());

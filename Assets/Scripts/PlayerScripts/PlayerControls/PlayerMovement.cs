@@ -30,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
 
     public bool isKnockedBack = false;
 
-    private Rigidbody2D rb;
+    public Rigidbody2D rb;
     private Vector2 moveInput;
 
     public Vector2 lookDirection;

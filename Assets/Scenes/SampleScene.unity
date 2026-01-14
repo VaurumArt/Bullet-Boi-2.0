@@ -10718,8 +10718,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1470178222}
   - {fileID: 538991054}
+  - {fileID: 1470178222}
   - {fileID: 1336143108}
   - {fileID: 1872295446}
   - {fileID: 1939843145}
@@ -10772,6 +10772,7 @@ MonoBehaviour:
   knockbackForce: 30
   knockbackDuration: 0.3
   isKnockedBack: 0
+  rb: {fileID: 0}
   lookDirection: {x: 0, y: 0}
 --- !u!50 &1221568368
 Rigidbody2D:
@@ -11294,6 +11295,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f9b9eaa1ba92ec4899216ad824ac67a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  body: {fileID: 1336143111}
+  head: {fileID: 1470178225}
 --- !u!1 &1241403070
 GameObject:
   m_ObjectHideFlags: 0
@@ -12047,6 +12050,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1336143108}
+  - component: {fileID: 1336143110}
+  - component: {fileID: 1336143111}
   - component: {fileID: 1336143109}
   m_Layer: 6
   m_Name: BodyBox
@@ -12114,7 +12119,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: -2914810238968597639, guid: 103ae49ddc5276d4eac039a962bc1da0, type: 3}
+  m_Sprite: {fileID: -4807657357259113356, guid: 0fb38cd403b926e41ba4deb90c44b9c5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -12125,6 +12130,47 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!111 &1336143110
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1336143107}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Animation: {fileID: 0}
+  m_Animations:
+  - {fileID: 7400000, guid: 9722b7785655b4043812f695b12fb1a3, type: 2}
+  - {fileID: 7400000, guid: a11e367e7a226f344808b29a5e21fca3, type: 2}
+  - {fileID: 7400000, guid: f35c3ffd9db18184f9a967db095997d6, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_UpdateMode: 0
+  m_CullingType: 0
+--- !u!95 &1336143111
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1336143107}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c829afa0ca9302c439f69228c13cc62a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1358171491
 GameObject:
   m_ObjectHideFlags: 0
@@ -13271,9 +13317,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1470178222}
+  - component: {fileID: 1470178226}
   - component: {fileID: 1470178224}
   - component: {fileID: 1470178223}
-  - component: {fileID: 1470178226}
   - component: {fileID: 1470178225}
   m_Layer: 0
   m_Name: BulletBoi temp head
@@ -13291,8 +13337,8 @@ Transform:
   m_GameObject: {fileID: 1470178221}
   serializedVersion: 2
   m_LocalRotation: {x: -0.0026013667, y: -0.0005160997, z: -0.19460201, w: 0.9808787}
-  m_LocalPosition: {x: -0.02, y: 1.38, z: 0}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 0}
+  m_LocalPosition: {x: -0.019999996, y: 1.4000001, z: 0}
+  m_LocalScale: {x: 2.5, y: 2.500001, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 541802365}
@@ -13364,7 +13410,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.0428572, y: 0.60571426}
+  m_Size: {x: 1.8957143, y: 1.2357143}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

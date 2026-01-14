@@ -38,7 +38,7 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 2654729916237243739}
-    m_Position: {x: 300, y: 70, z: 0}
+    m_Position: {x: 370, y: 50, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -7668697864360414956}
     m_Position: {x: 310, y: -70, z: 0}
@@ -83,7 +83,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PlayerHeadAnimation
+  m_Name: HeadAnimator
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: IsBiting
