@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using System.Collections;
 using UnityEngine.UI;
-using UnityEditor.Build;
 using TMPro;
 public class ScoreSystemScript : MonoBehaviour
 {
