@@ -13,8 +13,8 @@ public class EnemyBullet : MonoBehaviour
     {
         bulletRb =GetComponent<Rigidbody2D>();
         target = GameObject.FindGameObjectWithTag("Player");
-        Vector2 moveDir = (target.transform.position - transform.position).normalized * speed;
-        bulletRb.linearVelocity = new Vector2(moveDir.x,moveDir.y);
+         // Vector2 moveDir = (target.transform.position - transform.position).normalized * speed;
+         //   bulletRb.linearVelocity = new Vector2(moveDir.x,moveDir.y);
         Destroy(this.gameObject, bulletLifeTimer); //destroy in 2 sec
     }
 

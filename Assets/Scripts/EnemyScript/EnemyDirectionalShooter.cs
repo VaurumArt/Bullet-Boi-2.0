@@ -1,11 +1,11 @@
 using UnityEngine;
 
-public class EnemyAutoShoot : MonoBehaviour
+public class EnemyDirectionalShooter : MonoBehaviour
 {
     [Header("Setup")]
     public GameObject bulletPrefab;
     public Transform[] shootingPoints;
-    public Transform middleTrans;
+
     [Header("Settings")]
     public float fireRate = 1f;
     public float bulletSpeed = 5f;
@@ -34,9 +34,7 @@ public class EnemyAutoShoot : MonoBehaviour
             Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
-                Vector2 moveDir = (middleTrans.position - point.position).normalized;
-                rb.linearVelocity = moveDir * bulletSpeed;
-        
+                rb.linearVelocity = point.right * bulletSpeed;
             }
         }
     }
