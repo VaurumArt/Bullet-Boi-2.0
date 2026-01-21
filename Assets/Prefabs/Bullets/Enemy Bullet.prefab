@@ -103,7 +103,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.0001
   m_LinearDamping: 0
   m_AngularDamping: 0
   m_GravityScale: 0
@@ -292,5 +292,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d166af11a6605144d9d6fa06def81393, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
   speed: 30
   bulletLifeTimer: 10

@@ -1,11 +1,16 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Analytics;
-
+using MoreMountains.Feedbacks;
 public class BiteScript : MonoBehaviour
 {
     public Animator animator;
     [SerializeField] ScoreSystemScript ScoreScript;
+
+    [Header("FeedBack")]
+
+    public MMFeedbacks BiteFeedBack;
+    public MMFeedbacks BiteSuccessFeedBack;
 
     [Header("Bite Dectection HitBox")]
     private bool isBiting = false;
@@ -63,11 +68,13 @@ public class BiteScript : MonoBehaviour
     //  Function that change the color of the gizmo for better debugging 
     IEnumerator BiteActivated()
     {
+        BiteFeedBack?.PlayFeedbacks();
         BiteColor = activeBiteColor;
         isBiting = true;
         float elapsedTime = 0f;
         while (elapsedTime < biteDuration)
         {
+           
             PerformBite();
             animationHandler.BiteAnimationOn();
             
@@ -104,6 +111,7 @@ public class BiteScript : MonoBehaviour
             if (enemyHP != null)
             {
                 StartCoroutine(BitePauseTime());
+                BiteSuccessFeedBack?.PlayFeedbacks();
                 enemyHP.TakeDamage(biteDamage);
                 playerMovement.BiteSpeedup();
                 playerHP.BiteHeal();

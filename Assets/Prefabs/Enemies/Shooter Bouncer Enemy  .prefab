@@ -276,7 +276,7 @@ CircleCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 2ed95c4917dc7b5478c8b245c8b8f145, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -466,7 +466,7 @@ MonoBehaviour:
   - {fileID: 2124980091155686063}
   middleTrans: {fileID: 813815494673757377}
   fireRate: 0.2
-  bulletSpeed: 20
+  bulletSpeed: 50
 --- !u!1 &4688374700839168163
 GameObject:
   m_ObjectHideFlags: 0
