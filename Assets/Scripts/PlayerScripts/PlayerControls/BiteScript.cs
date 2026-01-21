@@ -9,8 +9,8 @@ public class BiteScript : MonoBehaviour
 
     [Header("FeedBack")]
 
-    public MMFeedbacks BiteFeedBack;
-    public MMFeedbacks BiteSuccessFeedBack;
+    public MMFeedbacks biteFeedBack;
+    public MMFeedbacks biteSuccessFeedBack;
 
     [Header("Bite Dectection HitBox")]
     private bool isBiting = false;
@@ -68,7 +68,7 @@ public class BiteScript : MonoBehaviour
     //  Function that change the color of the gizmo for better debugging 
     IEnumerator BiteActivated()
     {
-        BiteFeedBack?.PlayFeedbacks();
+        biteFeedBack?.PlayFeedbacks();
         BiteColor = activeBiteColor;
         isBiting = true;
         float elapsedTime = 0f;
@@ -111,7 +111,7 @@ public class BiteScript : MonoBehaviour
             if (enemyHP != null)
             {
                 StartCoroutine(BitePauseTime());
-                BiteSuccessFeedBack?.PlayFeedbacks();
+                biteSuccessFeedBack?.PlayFeedbacks();
                 enemyHP.TakeDamage(biteDamage);
                 playerMovement.BiteSpeedup();
                 playerHP.BiteHeal();

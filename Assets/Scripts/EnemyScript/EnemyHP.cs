@@ -1,9 +1,12 @@
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Collections;
 using UnityEngine;
-
+using MoreMountains.Feedbacks;
 public class EnemyHP : MonoBehaviour
 {
+    [Header("FeedBacks")]
+    public MMFeedbacks deathFeedback;
+    public MMFeedbacks damageFeedback;
     public GameObject bloodSplatter;
     public Transform bloodTransform;
     
@@ -67,6 +70,7 @@ public class EnemyHP : MonoBehaviour
     }
     public void Die()
     {
+        deathFeedback?.PlayFeedbacks();
         scoreSystemScript.BiteKillScore();
         Debug.Log("Basic Enemy Died");
         Instantiate(bloodSplatter, bloodTransform.position, bloodTransform.rotation);
@@ -75,6 +79,7 @@ public class EnemyHP : MonoBehaviour
 
     IEnumerator DamageIndicator()
     {
+        damageFeedback?.PlayFeedbacks();
         enemyBody.color = damagedColor;
         yield return  new WaitForSeconds(damageFrame);
         enemyBody.color = normalColor;

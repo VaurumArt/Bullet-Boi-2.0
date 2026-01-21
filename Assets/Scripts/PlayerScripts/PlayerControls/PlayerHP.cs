@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Runtime.ConstrainedExecution;
 using UnityEngine;
+using MoreMountains.Feedbacks;
 public class PlayerHP : MonoBehaviour
 {
+    [Header("FeedBack")]
+    public MMFeedbacks collideFeedBack;
     [Header("Player Stats")]
     public float health = 100f;
     public float maxHealth = 100f;
@@ -66,9 +69,10 @@ public class PlayerHP : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy") )
         {
+            collideFeedBack?.PlayFeedbacks();
             if (PlayerMovement.playerSpeed < 30)
             {
-                EnemyInfo enemyInfo =collision.gameObject.GetComponent<EnemyInfo>();
+                EnemyInfo enemyInfo = collision.gameObject.GetComponent<EnemyInfo>();
 
                 // Calculate direction: (Player position - Enemy position)
                 Vector2 knockbackDirection = (transform.position - collision.transform.position).normalized;
@@ -79,8 +83,9 @@ public class PlayerHP : MonoBehaviour
                 StartCoroutine(Invunerability());
             }
             else
-            { 
-            CollisionHeal();
+            {
+                CollisionHeal();
+
             }
             
         }
