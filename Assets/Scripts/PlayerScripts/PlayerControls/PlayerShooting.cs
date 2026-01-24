@@ -1,10 +1,12 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
-
-
+using MoreMountains.Feedbacks;
 public class PlayerShooting : MonoBehaviour
 {
+
+    [Header("Feedbacks")]
+    public MMFeedbacks shotFeedback;
     [Header("Shooting Settings")]
     public Transform firePoint;
     public GameObject bulletPrefab;
@@ -71,6 +73,7 @@ public class PlayerShooting : MonoBehaviour
     }
     private void Shoot()
     {
+        shotFeedback?.PlayFeedbacks();
         //// Destroy previous bullet if it exists
         //if (lastBullet != null)
         //{

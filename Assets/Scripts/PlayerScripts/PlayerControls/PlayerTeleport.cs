@@ -1,10 +1,11 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+using MoreMountains.Feedbacks;
 public class PlayerTeleport : MonoBehaviour
 {
     [Header("Teleport Settings")]
+    public MMFeedbacks teleportFeedBack;
     public float momentumMultiplier = 0.5f;
     public float teleportMomentumDuration = 4f;
     public float teleportCooldown = 1.5f;
@@ -98,6 +99,9 @@ public class PlayerTeleport : MonoBehaviour
         // Apply accumulated speed in bullet's direction
         rb.linearVelocity = bulletDirection * newSpeed;
 
+        //teleport sound 
+
+        teleportFeedBack?.PlayFeedbacks();
         // Reset momentum timer
         if (isTeleporting)
         {
