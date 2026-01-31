@@ -72,10 +72,13 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void BiteSpeedup()
-    {
-        rb.linearVelocity = rb.linearVelocity + (rb.linearVelocity * biteSpeedUpMult); // add .3 of speed to the player after biting an enemy
+    { rb.linearVelocity = rb.linearVelocity + (rb.linearVelocity * biteSpeedUpMult);
+      //  rb.linearVelocity = rb.linearVelocity + (rb.linearVelocity * biteSpeedUpMult); // add .3 of speed to the player after biting an enemy
     }
-
+    public void EnemeyCollision(float enemyForce)
+    {
+        rb.linearVelocity= rb.linearVelocity - (rb.linearVelocity * enemyForce);
+    }
     public void PlayerKnockBack(Vector2 direction)
     {
         if (!isKnockedBack)

@@ -849,7 +849,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 0.1
+  m_Mass: 1
   m_LinearDamping: 1
   m_AngularDamping: 1
   m_GravityScale: 0
@@ -983,6 +983,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   contactDamage: 10
+  stopForce: 0.09
+  parrySpeed: 125
+  rbEnemy: {fileID: 0}
+  isParried: 0
+  parryStunDuration: 1
+  movementScript: {fileID: 5362507120985847686}
 --- !u!114 &4349589359809771888
 MonoBehaviour:
   m_ObjectHideFlags: 0

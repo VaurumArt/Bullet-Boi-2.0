@@ -56,7 +56,7 @@ public class EnemyHP : MonoBehaviour
             PlayerMovement playermovment = collision.gameObject.GetComponent<PlayerMovement>();
             if (!playermovment.isKnockedBack && playerSpeed >= deathSpeed) //Check if the player speed is fast enough to kill the enemy 
             {
-                TakeDamage(50);
+                TakeDamage(20);
             }
 
         }

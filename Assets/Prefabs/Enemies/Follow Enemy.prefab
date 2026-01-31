@@ -267,7 +267,7 @@ MonoBehaviour:
   bloodTransform: {fileID: 7595507986210171776}
   maxHealth: 10
   currentHealth: 10
-  deathSpeed: 10
+  deathSpeed: 30
   normalColor: {r: 1, g: 0, b: 0.8117648, a: 1}
   damagedColor: {r: 1, g: 1, b: 1, a: 1}
   damageFrame: 0.1
@@ -306,6 +306,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   contactDamage: 15
+  stopForce: 0.2
+  parrySpeed: 100
+  rbEnemy: {fileID: 0}
+  isParried: 0
+  parryStunDuration: 1
+  movementScript: {fileID: 1017831877886386184}
 --- !u!1 &4641557260735102565
 GameObject:
   m_ObjectHideFlags: 0

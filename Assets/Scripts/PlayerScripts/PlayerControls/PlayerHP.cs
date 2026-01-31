@@ -42,6 +42,11 @@ public class PlayerHP : MonoBehaviour
     }
       public void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+           
+        }
+         
         if (collision.gameObject.CompareTag("EnemyBullet"))
         {
             EnemyBullet enemyBullet = collision.gameObject.GetComponent<EnemyBullet>();
@@ -70,22 +75,23 @@ public class PlayerHP : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy") )
         {
             collideFeedBack?.PlayFeedbacks();
+            EnemyInfo enemyInfo = collision.gameObject.GetComponent<EnemyInfo>();
             if (PlayerMovement.playerSpeed < 30)
             {
-                EnemyInfo enemyInfo = collision.gameObject.GetComponent<EnemyInfo>();
 
+                PlayerMovement.EnemeyCollision(enemyInfo.stopForce);
                 // Calculate direction: (Player position - Enemy position)
                 Vector2 knockbackDirection = (transform.position - collision.transform.position).normalized;
-
                 PlayerMovement.PlayerKnockBack(knockbackDirection);
                 PlayerTakeDamage(enemyInfo.contactDamage);
-
                 StartCoroutine(Invunerability());
+               
             }
             else
             {
+                PlayerMovement.EnemeyCollision(enemyInfo.stopForce);
                 CollisionHeal();
-
+               
             }
             
         }

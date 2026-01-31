@@ -8,6 +8,7 @@ TagManager:
   - Bullet
   - Enemy
   - EnemyBullet
+  - Objects
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - PlayerProjectile
   - EnemyProjectile
   - CameraConfiner
-  - 
+  - Object
   - 
   - 
   - 
