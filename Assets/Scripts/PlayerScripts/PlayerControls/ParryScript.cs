@@ -79,10 +79,10 @@ public class ParryScript : MonoBehaviour
         Collider2D[] parriedEnemies = Physics2D.OverlapBoxAll(offsetPosition, parrySize, attackPoint.eulerAngles.z, enemyLayers);
         foreach (Collider2D enemy in parriedEnemies) // Changed 'projectile' to 'enemy' for clarity
         {
-            EnemyInfo enemyInfo = enemy.GetComponent<EnemyInfo>(); // Changed to enemyInfo
-            if (enemyInfo != null) // Check if enemyInfo exists, not enemyBody
+            EnemyParryBehaviour enemyParryBehaviour = enemy.GetComponent<EnemyParryBehaviour>(); // Changed to enemyInfo
+            if (enemyParryBehaviour != null) // Check if enemyInfo exists, not enemyBody
             {
-                ParryEnemy(enemy, enemyInfo); // Pass enemy and enemyInfo, not enemyBullet
+                ParryEnemy(enemy, enemyParryBehaviour); // Pass enemy and enemyInfo, not enemyBullet
            
             }
         }
@@ -127,23 +127,39 @@ public class ParryScript : MonoBehaviour
         StartCoroutine(parryPauseTime());
         ScoreScript.SuccessfullParryScore();
     }
-    void ParryEnemy(Collider2D enemy, EnemyInfo enemyInfo)
+    void ParryEnemy(Collider2D enemy, EnemyParryBehaviour enemyParryBehaviour)
     {
-        // Use the rbEnemy reference that's already in EnemyInfo
-        if (enemyInfo.rbEnemy == null) return;
+        if (!enemyParryBehaviour.isParried)
+        {
+            // Check if rbEnemy exists
+            if (enemyParryBehaviour.rbEnemy == null) return;
 
-        EnemyHP enemyHP = enemy.GetComponent<EnemyHP>();
+            // 1. DISABLE MOVEMENT FIRST
+            enemyParryBehaviour.GetParried();
 
-        Vector2 screenMousePos = Mouse.current.position.ReadValue();
-        Vector3 worldMousePos3D = Camera.main.ScreenToWorldPoint(new Vector3(screenMousePos.x, screenMousePos.y, Camera.main.nearClipPlane));
-        Vector2 mouseWorldPos2D = (Vector2)worldMousePos3D;
-        Vector2 newDirection = (mouseWorldPos2D - (Vector2)enemy.transform.position).normalized;
-        enemyHP.TakeDamage(kickDamage);
-        // Launch the enemy toward the mouse with the parry speed
-        enemyInfo.rbEnemy.linearVelocity = newDirection * enemyInfo.parrySpeed;
-        enemyInfo.GetParried();
-        StartCoroutine(parryPauseTime());
-        ScoreScript.SuccessfullParryScore();
+            // 2. Get enemy HP
+            EnemyHP enemyHP = enemy.GetComponent<EnemyHP>();
+
+            // 3. Calculate mouse direction
+            Vector2 screenMousePos = Mouse.current.position.ReadValue();
+            Vector3 worldMousePos3D = Camera.main.ScreenToWorldPoint(new Vector3(screenMousePos.x, screenMousePos.y, Camera.main.nearClipPlane));
+            Vector2 mouseWorldPos2D = (Vector2)worldMousePos3D;
+            Vector2 newDirection = (mouseWorldPos2D - (Vector2)enemy.transform.position).normalized;
+
+            // 4. Deal damage
+            if (enemyHP != null)
+            {
+                enemyHP.TakeDamage(kickDamage);
+            }
+
+            // 5. SET VELOCITY (now that movement is disabled)
+            enemyParryBehaviour.rbEnemy.linearVelocity = newDirection * enemyParryBehaviour.parrySpeed;
+
+            // 6. Effects
+            StartCoroutine(parryPauseTime());
+            ScoreScript.SuccessfullParryScore();
+        }
+
     }
     IEnumerator ParryingActivated()
     {

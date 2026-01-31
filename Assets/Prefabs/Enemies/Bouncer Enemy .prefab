@@ -1025,6 +1025,7 @@ GameObject:
   - component: {fileID: 8855315126137131934}
   - component: {fileID: 7505942101581266954}
   - component: {fileID: 8914820748587873908}
+  - component: {fileID: -148010299012240162}
   m_Layer: 7
   m_Name: 'Bouncer Enemy '
   m_TagString: Enemy
@@ -1239,10 +1240,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contactDamage: 10
   stopForce: 0.09
-  parrySpeed: 125
+--- !u!114 &-148010299012240162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6742645572733891904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56a2af70d52571844ad1aa6bb0687940, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parrySpeed: 120
   rbEnemy: {fileID: 0}
   isParried: 0
-  parryStunDuration: 2
+  parryStunDuration: 1
   movementScript: {fileID: 7505942101581266954}
 --- !u!1 &7218230960965804791
 GameObject:

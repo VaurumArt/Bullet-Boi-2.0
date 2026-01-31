@@ -102,6 +102,7 @@ GameObject:
   - component: {fileID: 7214693430567442402}
   - component: {fileID: 1017831877886386184}
   - component: {fileID: 9123634193159501099}
+  - component: {fileID: -2731888313564338748}
   m_Layer: 7
   m_Name: Follow Enemy
   m_TagString: Enemy
@@ -307,7 +308,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contactDamage: 15
   stopForce: 0.2
-  parrySpeed: 100
+--- !u!114 &-2731888313564338748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3523405051972459490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56a2af70d52571844ad1aa6bb0687940, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parrySpeed: 120
   rbEnemy: {fileID: 0}
   isParried: 0
   parryStunDuration: 1

@@ -20,11 +20,12 @@ public class EnemyHP : MonoBehaviour
     public SpriteRenderer enemyBody; 
 
     ScoreSystemScript scoreSystemScript;
+    EnemyParryBehaviour enemyParryBehaviour;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         scoreSystemScript = FindAnyObjectByType<ScoreSystemScript>();
-     
+        enemyParryBehaviour = GetComponent<EnemyParryBehaviour>();
         currentHealth = maxHealth;
 
     }
@@ -65,8 +66,15 @@ public class EnemyHP : MonoBehaviour
             BulletScript bulletInfo = collision.gameObject.GetComponent<BulletScript>();
             TakeDamage(bulletInfo.bulletDamage);
         }
-        
-        
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+           if(enemyParryBehaviour.isParried)
+            {
+                TakeDamage(5);
+            }
+        }
+
+
     }
     public void Die()
     {
