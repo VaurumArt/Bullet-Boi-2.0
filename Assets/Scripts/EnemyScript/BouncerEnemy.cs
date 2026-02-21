@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.UIElements;
+
 public class BouncerEnemy : MonoBehaviour
 {
     [Header("Enemy Movement")]
@@ -10,9 +10,8 @@ public class BouncerEnemy : MonoBehaviour
     public float speed;
     public GameObject rightCheck, leftCheck, roofCheck, groundCheck;
     public LayerMask groundLayer;
-
     [Header("Collider size")]
-    public Vector2 rightBox = new Vector2 (2,2);
+    public Vector2 rightBox = new Vector2(2, 2);
     public Vector2 leftBox = new Vector2(2, 2);
     public Vector2 roofBox = new Vector2(2, 2);
     public Vector2 floorBox = new Vector2(2, 2);
@@ -20,58 +19,55 @@ public class BouncerEnemy : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D enemyRb;
     private float lastBounceTime;
-    private bool groundTouch;
-    private bool roofTouch;
-    private bool rightTouch;
-    private bool leftTouch;
+    private bool groundTouch, roofTouch, rightTouch, leftTouch;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        if (spriteRenderer == null)
-        {
-            Debug.LogError("No SpriteRenderer found on " + gameObject.name);
-        }
         enemyRb = GetComponent<Rigidbody2D>();
-        dirX = Random.Range(minAngle, maxAngle) * (Random.value < 0.5 ? -1 : 1);
-        dirY =  Random.value < 0.5 ? -1 : 1;
+        dirX = Random.Range(minAngle, maxAngle) * (Random.value < 0.5f ? -1 : 1);
+        dirY = Random.value < 0.5f ? -1 : 1;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        enemyRb.linearVelocity = new Vector2(dirX, dirY) * speed; // * Time.deltaTime;
-
+        enemyRb.linearVelocity = new Vector2(dirX, dirY) * speed;
+        SpriteFlip();
         HitDetection();
     }
+
+    void SpriteFlip()
+    {
+        if (enemyRb.linearVelocity.x < 0)
+            spriteRenderer.flipX = true;
+        else if (enemyRb.linearVelocity.x > 0)
+            spriteRenderer.flipX = false;
+    }
+
     void HitDetection()
     {
-        rightTouch = Physics2D.OverlapBox(rightCheck.transform.position, rightBox,0f, groundLayer);
+        rightTouch = Physics2D.OverlapBox(rightCheck.transform.position, rightBox, 0f, groundLayer);
         leftTouch = Physics2D.OverlapBox(leftCheck.transform.position, leftBox, 0f, groundLayer);
         roofTouch = Physics2D.OverlapBox(roofCheck.transform.position, roofBox, 0f, groundLayer);
         groundTouch = Physics2D.OverlapBox(groundCheck.transform.position, floorBox, 0f, groundLayer);
         HitLogic();
     }
 
-  
-
     void HitLogic()
     {
-        if (Time.time - lastBounceTime < 0.1f) return; // 0.1 second cooldown
+        if (Time.time - lastBounceTime < 0.1f) return;
 
         if (rightTouch)
         {
             dirX = -Random.Range(minAngle, maxAngle);
-            spriteRenderer.flipX = true;
             lastBounceTime = Time.time;
         }
         else if (leftTouch)
         {
             dirX = Random.Range(minAngle, maxAngle);
-            spriteRenderer.flipX = false;
             lastBounceTime = Time.time;
         }
+
         if (roofTouch)
         {
             dirY = -1;
@@ -93,6 +89,3 @@ public class BouncerEnemy : MonoBehaviour
         Gizmos.DrawWireCube(groundCheck.transform.position, floorBox);
     }
 }
-
-
-
