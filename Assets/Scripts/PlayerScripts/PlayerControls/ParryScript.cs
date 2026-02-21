@@ -2,12 +2,10 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using MoreMountains.Feedbacks;
-using System.Collections.Generic;
 public class ParryScript : MonoBehaviour
 {
     [SerializeField] ScoreSystemScript ScoreScript;
     public float kickDamage = 5f;
-    public float parryMultiplier = 1f;  
     public MMFeedbacks parryFeedback;
     [Header("Parry Checker")]
     private bool isParrying = false;
@@ -22,11 +20,8 @@ public class ParryScript : MonoBehaviour
     public Vector2 parrySize = new Vector2(2, 2); // Same as biteSize
 
     public LayerMask projectileLayers;
-    public float projectileParrySpeed = 1;
     public LayerMask enemyLayers;
-    public float enemyParrySpeed = 1;
     public LayerMask objectLayers;
-    public float objectParrySpeed = 1;
 
     [Header("Parry Duration & CD")]
     public float parryDuration = 0.2f;
@@ -38,12 +33,9 @@ public class ParryScript : MonoBehaviour
     public float parryPauseFactor = 1f;
     public float parrypausetime = 1f;
     private SlowMoScript slowMoScript;
-    private AnimationHandler animationHandler;
-    private HashSet<Collider2D> hitObjectThisParry = new HashSet<Collider2D>();
     void Start()
     {
         slowMoScript = GetComponent<SlowMoScript>();
-        animationHandler = GetComponent<AnimationHandler>();
         parryColor = inActiveParryColor;
     }
     IEnumerator parryPauseTime()
@@ -55,35 +47,6 @@ public class ParryScript : MonoBehaviour
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;
         slowMoScript.TimeResume();
-    }
-    IEnumerator ParryingActivated()
-    {
-
-        isParrying = true;
-        parryColor = activeParryColor;
-        float ElapsedTime = 0;
-        parryFeedback?.PlayFeedbacks();
-        animationHandler.ParryAnimationOn();
-        hitObjectThisParry.Clear();
-        while (ElapsedTime < parryDuration)
-        {
-            PerformParry();
-            yield return new WaitForSeconds(parryTickRate);
-            ElapsedTime += parryTickRate;
-        }
-        animationHandler.ParryAnimationOff();
-        isParrying = false;
-        StartCoroutine(ParryingisCoolingdown());
-
-    }
-
-    IEnumerator ParryingisCoolingdown()
-    {
-        canParry = false;
-        parryColor = CooldownParryColor;
-        yield return new WaitForSeconds(parryCooldown);
-        canParry = true;
-        parryColor = inActiveParryColor;
     }
 
     public void OnParry()
@@ -104,8 +67,6 @@ public class ParryScript : MonoBehaviour
         Collider2D[] parriedProjectiles = Physics2D.OverlapBoxAll(offsetPosition, parrySize, attackPoint.eulerAngles.z, projectileLayers);
         foreach (Collider2D projectile in parriedProjectiles)
         {
-           
-
             EnemyBullet enemyBullet = projectile.GetComponent<EnemyBullet>();
             if (enemyBullet != null)
             {
@@ -129,13 +90,9 @@ public class ParryScript : MonoBehaviour
         Collider2D[] parriedObjects = Physics2D.OverlapBoxAll(offsetPosition, parrySize, attackPoint.eulerAngles.z, objectLayers);
         foreach (Collider2D obj in parriedObjects) // Changed 'object' to 'obj' - 'object' is a reserved keyword!
         {
-            if (hitObjectThisParry.Contains(obj))
-                continue;
-
             ObjectInfo objectInfo = obj.GetComponent<ObjectInfo>(); // Changed EnemyInfo to ObjectInfo
             if (objectInfo != null)
             {
-                hitObjectThisParry.Add(obj);
                 ParryObject(obj, objectInfo); // Create a separate method for objects
             }
         }
@@ -148,7 +105,7 @@ public class ParryScript : MonoBehaviour
         Vector2 mouseWorldPos2D = (Vector2)worldMousePos3D;
         Vector2 newDirection = (mouseWorldPos2D - (Vector2)projectile.transform.position).normalized;
 
-        rbBullet.linearVelocity = newDirection * (rbBullet.linearVelocity.magnitude * projectileParrySpeed);
+        rbBullet.linearVelocity = newDirection * (rbBullet.linearVelocity.magnitude * parrySpeedBoost);
         rbBullet.gameObject.layer = LayerMask.NameToLayer("PlayerProjectile");
         rbBullet.gameObject.tag = "Bullet";
         StartCoroutine(parryPauseTime());
@@ -156,18 +113,16 @@ public class ParryScript : MonoBehaviour
     }
     void ParryObject(Collider2D obj, ObjectInfo objectInfo)
     {
-      
-            // Use the rbEnemy reference that's already in EnemyInfo
-            if (objectInfo.rbObject == null) return;
+        // Use the rbEnemy reference that's already in EnemyInfo
+        if (objectInfo.rbObject == null) return;
 
 
-        
         Vector2 screenMousePos = Mouse.current.position.ReadValue();
         Vector3 worldMousePos3D = Camera.main.ScreenToWorldPoint(new Vector3(screenMousePos.x, screenMousePos.y, Camera.main.nearClipPlane));
         Vector2 mouseWorldPos2D = (Vector2)worldMousePos3D;
         Vector2 newDirection = (mouseWorldPos2D - (Vector2)obj.transform.position).normalized;
-
-        objectInfo.rbObject.linearVelocity = newDirection * objectInfo.parrySpeed *objectParrySpeed;
+    
+        objectInfo.rbObject.linearVelocity = newDirection * objectInfo.parrySpeed;
         
         StartCoroutine(parryPauseTime());
         ScoreScript.SuccessfullParryScore();
@@ -198,7 +153,7 @@ public class ParryScript : MonoBehaviour
             }
 
             // 5. SET VELOCITY (now that movement is disabled)
-            enemyParryBehaviour.rbEnemy.linearVelocity = newDirection * (enemyParryBehaviour.parrySpeed* enemyParrySpeed);
+            enemyParryBehaviour.rbEnemy.linearVelocity = newDirection * enemyParryBehaviour.parrySpeed;
 
             // 6. Effects
             StartCoroutine(parryPauseTime());
@@ -206,7 +161,32 @@ public class ParryScript : MonoBehaviour
         }
 
     }
-   
+    IEnumerator ParryingActivated()
+    {
+        isParrying = true;
+        parryColor = activeParryColor;
+        float ElapsedTime = 0;
+        parryFeedback?.PlayFeedbacks();
+        while (ElapsedTime < parryDuration)
+        {
+            PerformParry();
+            yield return new WaitForSeconds(parryTickRate);
+            ElapsedTime += parryTickRate;
+        }
+
+        isParrying = false;
+        StartCoroutine(ParryingisCoolingdown());
+    }
+
+    IEnumerator ParryingisCoolingdown()
+    {
+        canParry = false;
+        parryColor = CooldownParryColor;
+        yield return new WaitForSeconds(parryCooldown);
+        canParry = true;
+        parryColor = inActiveParryColor;
+    }
+
     private void OnDrawGizmos()
     {
         // EXACTLY the same as BiteScript's OnDrawGizmos

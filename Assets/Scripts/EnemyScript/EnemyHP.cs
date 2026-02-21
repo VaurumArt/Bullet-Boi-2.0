@@ -28,11 +28,6 @@ public class EnemyHP : MonoBehaviour
         enemyParryBehaviour = GetComponent<EnemyParryBehaviour>();
         currentHealth = maxHealth;
 
-        if (enemyBody == null)
-            Debug.LogError("EnemyBody is NOT assigned in Inspector!", this);
-
-        if (bloodTransform == null)
-            Debug.LogError("BloodTransform is NOT assigned!", this);
     }
 
     // Update is called once per frame
@@ -54,37 +49,33 @@ public class EnemyHP : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if(collision.gameObject.CompareTag("Player"))
         {
-            if (collision.gameObject.TryGetComponent(out Rigidbody2D playerRb) &&
-                collision.gameObject.TryGetComponent(out PlayerMovement playerMovement))
+       Rigidbody2D playerRb =collision.gameObject.GetComponent<Rigidbody2D>();
+          
+            float playerSpeed = playerRb.linearVelocity.magnitude;
+            PlayerMovement playermovment = collision.gameObject.GetComponent<PlayerMovement>();
+            if (!playermovment.isKnockedBack && playerSpeed >= deathSpeed) //Check if the player speed is fast enough to kill the enemy 
             {
-                float playerSpeed = playerRb.linearVelocity.magnitude;
-
-                if (!playerMovement.isKnockedBack && playerSpeed >= deathSpeed)
-                {
-                    TakeDamage(20);
-                }
+                TakeDamage(20);
             }
-        }
 
+        }
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            if (collision.gameObject.TryGetComponent(out BulletScript bulletInfo))
-            {
-                TakeDamage(bulletInfo.bulletDamage);
-            }
+            BulletScript bulletInfo = collision.gameObject.GetComponent<BulletScript>();
+            TakeDamage(bulletInfo.bulletDamage);
         }
-
-        if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Wall"))
         {
-            if (enemyParryBehaviour != null && enemyParryBehaviour.isParried)
+           if(enemyParryBehaviour.isParried)
             {
-                TakeDamage(2);
+                TakeDamage(5);
             }
         }
-    }
 
+
+    }
     public void Die()
     {
         deathFeedback?.PlayFeedbacks();
