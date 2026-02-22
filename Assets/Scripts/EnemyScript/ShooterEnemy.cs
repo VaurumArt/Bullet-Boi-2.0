@@ -8,7 +8,7 @@ public class ShooterEnemy : MonoBehaviour
 {
     public float fireRate = 1.0f;
     public float nextFireTime;
-    public float speed;
+
     public float lineOfSight = 20;
     public float shootingRange = 15f;
     private Transform player;
@@ -31,8 +31,8 @@ public class ShooterEnemy : MonoBehaviour
         float distanceFromPlayer = Vector2.Distance(player.position, transform.position);
         if (distanceFromPlayer < lineOfSight && distanceFromPlayer > shootingRange)
         {
-            transform.position = Vector2.MoveTowards(this.transform.position, player.position, speed * Time.deltaTime);
-            FlipEnemy();
+         //   transform.position = Vector2.MoveTowards(this.transform.position, player.position, speed * Time.deltaTime);
+        
 
         }
         else if (distanceFromPlayer <= lineOfSight && nextFireTime < Time.time)
@@ -43,31 +43,15 @@ public class ShooterEnemy : MonoBehaviour
    
         }
 
-        if (distanceFromPlayer <= lineOfSight)
-        {
-            FlipEnemy();
-        }
+      
     }
-    void FlipEnemy()
-    {
-        if (playerpos < 0 && !facingRight)
-        {// the player is in the right 
-            facingRight = true;
-            transform.Rotate(new Vector3(0, -180, 0));
-        }
-        else if (playerpos > 0 && facingRight)
-        {
-            facingRight = false;
-            // the player is in the left 
-            transform.Rotate(new Vector3(0, 180, 0));
-        }
 
 
 
-    }
+   
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
+        Gizmos.color = Color.blue;
 
         Gizmos.DrawWireSphere(transform.position, lineOfSight);
         Gizmos.DrawWireSphere(transform.position, shootingRange);

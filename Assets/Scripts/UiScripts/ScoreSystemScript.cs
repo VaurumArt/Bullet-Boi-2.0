@@ -1,6 +1,4 @@
-using System.Drawing;
 using UnityEngine;
-using UnityEngine.UIElements;
 using System.Collections;
 using UnityEngine.UI;
 using TMPro;

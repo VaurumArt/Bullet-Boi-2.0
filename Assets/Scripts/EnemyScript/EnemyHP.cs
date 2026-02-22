@@ -14,10 +14,9 @@ public class EnemyHP : MonoBehaviour
     public float currentHealth;
     public float deathSpeed = 30f;
 
-    public Color normalColor = Color.white;
-    public Color damagedColor = Color.red;
+   
     public float damageFrame = 0.5f;
-    public SpriteRenderer enemyBody; 
+ 
 
     ScoreSystemScript scoreSystemScript;
     EnemyParryBehaviour enemyParryBehaviour;
@@ -28,8 +27,7 @@ public class EnemyHP : MonoBehaviour
         enemyParryBehaviour = GetComponent<EnemyParryBehaviour>();
         currentHealth = maxHealth;
 
-        if (enemyBody == null)
-            Debug.LogError("EnemyBody is NOT assigned in Inspector!", this);
+      
 
         if (bloodTransform == null)
             Debug.LogError("BloodTransform is NOT assigned!", this);
@@ -46,7 +44,7 @@ public class EnemyHP : MonoBehaviour
 
     public void TakeDamage( float damage)
     {
-        StartCoroutine(DamageIndicator());
+        damageFeedback?.PlayFeedbacks();
         currentHealth = currentHealth - damage;
        
 
@@ -94,12 +92,5 @@ public class EnemyHP : MonoBehaviour
         Destroy(gameObject);
     }
 
-    IEnumerator DamageIndicator()
-    {
-        damageFeedback?.PlayFeedbacks();
-        enemyBody.color = damagedColor;
-        yield return  new WaitForSeconds(damageFrame);
-        enemyBody.color = normalColor;
 
-    }
 }
