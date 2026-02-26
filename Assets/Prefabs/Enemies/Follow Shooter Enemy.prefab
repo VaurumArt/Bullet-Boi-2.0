@@ -103,8 +103,9 @@ GameObject:
   - component: {fileID: 1017831877886386184}
   - component: {fileID: 9123634193159501099}
   - component: {fileID: -2731888313564338748}
+  - component: {fileID: 3389044486414126196}
   m_Layer: 7
-  m_Name: Follow Enemy
+  m_Name: Follow Shooter Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -177,7 +178,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 0, b: 0.81155586, a: 1}
+  m_Color: {r: 1, g: 0, b: 0.3372549, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -282,7 +283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6406e8ef0cfdccc48b58338ec0ca4fee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
+  speed: 10
   lineOfSight: 30
   randPos: {x: 0, y: 0}
   isChasing: 0
@@ -317,11 +318,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56a2af70d52571844ad1aa6bb0687940, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parrySpeed: 120
+  parrySpeed: 100
   rbEnemy: {fileID: 0}
   isParried: 0
-  parryStunDuration: 1
+  parryStunDuration: 0.5
   movementScript: {fileID: 1017831877886386184}
+--- !u!114 &3389044486414126196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3523405051972459490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c99f07aa92fe574dbc435992c7ae5e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4641557260735102565
 GameObject:
   m_ObjectHideFlags: 0

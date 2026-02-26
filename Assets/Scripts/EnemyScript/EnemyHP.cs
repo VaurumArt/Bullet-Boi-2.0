@@ -14,20 +14,34 @@ public class EnemyHP : MonoBehaviour
     public float currentHealth;
     public float deathSpeed = 30f;
 
-    public Color normalColor = Color.white;
-    public Color damagedColor = Color.red;
+   
     public float damageFrame = 0.5f;
-    public SpriteRenderer enemyBody; 
+ 
 
     ScoreSystemScript scoreSystemScript;
     EnemyParryBehaviour enemyParryBehaviour;
+    GameManager gameManager;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    private void Awake()
+    {
+       
+    }
     void Start()
     {
+        gameManager = FindAnyObjectByType<GameManager>();  
         scoreSystemScript = FindAnyObjectByType<ScoreSystemScript>();
         enemyParryBehaviour = GetComponent<EnemyParryBehaviour>();
         currentHealth = maxHealth;
 
+<<<<<<< HEAD
+=======
+        gameManager.EnemyAlive();
+
+
+        if (bloodTransform == null)
+            Debug.LogError("BloodTransform is NOT assigned!", this);
+>>>>>>> recovered
     }
 
     // Update is called once per frame
@@ -41,7 +55,7 @@ public class EnemyHP : MonoBehaviour
 
     public void TakeDamage( float damage)
     {
-        StartCoroutine(DamageIndicator());
+        damageFeedback?.PlayFeedbacks();
         currentHealth = currentHealth - damage;
        
 
@@ -78,6 +92,7 @@ public class EnemyHP : MonoBehaviour
     }
     public void Die()
     {
+        gameManager.EnemyDeath();
         deathFeedback?.PlayFeedbacks();
         scoreSystemScript.BiteKillScore();
         Debug.Log("Basic Enemy Died");
@@ -85,12 +100,5 @@ public class EnemyHP : MonoBehaviour
         Destroy(gameObject);
     }
 
-    IEnumerator DamageIndicator()
-    {
-        damageFeedback?.PlayFeedbacks();
-        enemyBody.color = damagedColor;
-        yield return  new WaitForSeconds(damageFrame);
-        enemyBody.color = normalColor;
 
-    }
 }

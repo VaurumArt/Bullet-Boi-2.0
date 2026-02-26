@@ -411,7 +411,7 @@ MonoBehaviour:
         PropertyName: _Tint
         FlickerDuration: 0.2
         FlickerPeriod: 0
-        FlickerColor: {r: 5.6629243, g: 5.6629243, b: 5.6629243, a: 1}
+        FlickerColor: {r: 7.5604496, g: 0, b: 0, a: 1}
         MaterialIndexes: 
         UseMaterialPropertyBlocks: 0
         SpriteRendererTextureProperty: _MainTex
@@ -850,7 +850,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.5
   m_LinearDamping: 1
   m_AngularDamping: 1
   m_GravityScale: 0
@@ -884,10 +884,7 @@ MonoBehaviour:
   maxHealth: 10
   currentHealth: 10
   deathSpeed: 30
-  normalColor: {r: 1, g: 0.6156863, b: 0, a: 1}
-  damagedColor: {r: 1, g: 1, b: 1, a: 1}
   damageFrame: 0.1
-  enemyBody: {fileID: 3986412140735020953}
 --- !u!212 &3986412140735020953
 SpriteRenderer:
   m_ObjectHideFlags: 0
