@@ -96,7 +96,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7479832818492032872}
-  - component: {fileID: 3477201750243313178}
   - component: {fileID: 1175286209425740020}
   - component: {fileID: 1466432256626128954}
   - component: {fileID: 4926870448590705118}
@@ -104,6 +103,7 @@ GameObject:
   - component: {fileID: 1017831877886386184}
   - component: {fileID: 9123634193159501099}
   - component: {fileID: -2731888313564338748}
+  - component: {fileID: 3389044486414126196}
   m_Layer: 7
   m_Name: Follow Shooter Enemy
   m_TagString: Enemy
@@ -133,25 +133,6 @@ Transform:
   - {fileID: 2291275474123378982}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3477201750243313178
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3523405051972459490}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1456e1a221a65aa4cabfc7fb8b4aa1c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fireRate: 1
-  nextFireTime: 1
-  speed: 1000
-  lineOfSight: 20
-  shootingRange: 15
-  bulletParent: {fileID: 6598188046884248454}
-  bullets: {fileID: 8756030474110749672, guid: 023968dae43da0e47b452d10932a0ec6, type: 3}
 --- !u!212 &1175286209425740020
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -342,6 +323,18 @@ MonoBehaviour:
   isParried: 0
   parryStunDuration: 0.5
   movementScript: {fileID: 1017831877886386184}
+--- !u!114 &3389044486414126196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3523405051972459490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c99f07aa92fe574dbc435992c7ae5e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4641557260735102565
 GameObject:
   m_ObjectHideFlags: 0
