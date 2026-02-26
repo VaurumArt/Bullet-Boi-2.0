@@ -116,7 +116,7 @@ public class BiteScript : MonoBehaviour
                 hitAnyEnemyThisBite = true;
 
                 // Trigger effects only on first enemy hit this bite
-                if (hitEnemiesThisBite.Count >= 1)
+                if (hitEnemiesThisBite.Count == 1)
                 {
                     StartCoroutine(BitePauseTime());
                     biteSuccessFeedBack?.PlayFeedbacks();
