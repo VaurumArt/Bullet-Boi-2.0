@@ -29,9 +29,13 @@ public class EnemyHP : MonoBehaviour
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         gameManager.EnemyAlive();
 
+=======
+      
+>>>>>>> parent of 3d36f30 (Win and lose con)
 =======
       
 >>>>>>> parent of 3d36f30 (Win and lose con)
