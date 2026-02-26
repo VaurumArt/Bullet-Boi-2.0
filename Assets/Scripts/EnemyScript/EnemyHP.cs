@@ -20,24 +20,21 @@ public class EnemyHP : MonoBehaviour
 
     ScoreSystemScript scoreSystemScript;
     EnemyParryBehaviour enemyParryBehaviour;
-    GameManager gameManager;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-
-    private void Awake()
-    {
-       
-    }
     void Start()
     {
-        gameManager = FindAnyObjectByType<GameManager>();  
         scoreSystemScript = FindAnyObjectByType<ScoreSystemScript>();
         enemyParryBehaviour = GetComponent<EnemyParryBehaviour>();
         currentHealth = maxHealth;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         gameManager.EnemyAlive();
 
+=======
+      
+>>>>>>> parent of 3d36f30 (Win and lose con)
 
         if (bloodTransform == null)
             Debug.LogError("BloodTransform is NOT assigned!", this);
@@ -92,7 +89,6 @@ public class EnemyHP : MonoBehaviour
     }
     public void Die()
     {
-        gameManager.EnemyDeath();
         deathFeedback?.PlayFeedbacks();
         scoreSystemScript.BiteKillScore();
         Debug.Log("Basic Enemy Died");
