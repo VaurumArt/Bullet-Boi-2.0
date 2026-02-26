@@ -317,10 +317,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56a2af70d52571844ad1aa6bb0687940, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parrySpeed: 100
+  parrySpeed: 120
   rbEnemy: {fileID: 0}
   isParried: 0
-  parryStunDuration: 0.5
+  parryStunDuration: 1
   movementScript: {fileID: 1017831877886386184}
 --- !u!1 &4641557260735102565
 GameObject:

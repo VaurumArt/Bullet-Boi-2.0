@@ -5,7 +5,7 @@ public class AnimationHandler : MonoBehaviour
     [Header("Animators")]
     [SerializeField] private Animator body;
     [SerializeField] private Animator head;
-    [SerializeField] private Animator parry;
+
     private PlayerMovement playerMovement;
 
     [Header("Jump/Fall Settings")]
@@ -90,18 +90,5 @@ public class AnimationHandler : MonoBehaviour
         }
     }
 
-    #endregion
-
-    #region Parry Animations
-    public void ParryAnimationOn()
-    {
-        if (parry != null)
-            SetBoolSafe(parry, "IsParrying", true);
-    }
-    public void ParryAnimationOff()
-    {
-        if (parry != null)
-            SetBoolSafe(parry, "IsParrying",false);
-    }
     #endregion
 }

@@ -2,12 +2,8 @@ using System.Collections;
 using System.Runtime.ConstrainedExecution;
 using UnityEngine;
 using MoreMountains.Feedbacks;
-using System.Xml.Serialization;
-using JetBrains.Annotations;
 public class PlayerHP : MonoBehaviour
 {
-
-
     [Header("FeedBack")]
     public MMFeedbacks collideFeedBack;
     [Header("Player Stats")]
@@ -27,42 +23,22 @@ public class PlayerHP : MonoBehaviour
     public SpriteRenderer headRend;
     public SpriteRenderer bodyRend;
     PlayerMovement PlayerMovement;
-    public GameManager GameManager;
-    public bool isAlive ;
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        GameManager = FindAnyObjectByType<GameManager>();
         PlayerMovement = GetComponent<PlayerMovement>();
-        isAlive = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        health = Mathf.Clamp(health, 0, maxHealth);
+      health = Mathf.Clamp(health, 0, maxHealth);
     }
-
-    public void PlayerStatusCheck()
-    {
-        if (health < 0)
-        {
-            isAlive = false;
-            Death();
-        }
-    }
-    private void Death()
-    {
-        GameManager.LoseCondition();
-    }
-
 
     public void PlayerTakeDamage(float damage)
     {
 
         health = health - damage;
-        PlayerStatusCheck();
     }
       public void OnCollisionEnter2D(Collision2D collision)
     {
@@ -139,5 +115,4 @@ public class PlayerHP : MonoBehaviour
         Physics2D.IgnoreLayerCollision(6, 7,false);
         Physics2D.IgnoreLayerCollision(6, 10, false);
     }
-    
 }
